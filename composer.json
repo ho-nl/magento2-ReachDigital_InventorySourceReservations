@@ -12,12 +12,12 @@
     ],
     "autoload": {
         "files": [
-            "InventoryReservations/registration.php",
-            "InventoryReservationsApi/registration.php"
+            "InventorySourceReservations/registration.php",
+            "InventorySourceReservationsApi/registration.php"
         ],
         "psr-4": {
-            "ReachDigital\\InventoryReservations\\": "InventoryReservations",
-            "ReachDigital\\InventoryReservationsApi\\": "InventoryReservationsApi"
+            "ReachDigital\\InventorySourceReservations\\": "InventorySourceReservations",
+            "ReachDigital\\InventorySourceReservationsApi\\": "InventorySourceReservationsApi"
         }
     }
 }
