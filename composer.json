@@ -1,0 +1,23 @@
+{
+    "name": "reach-digital/magento2-inventory-source-reservations",
+    "description": "N/A",
+    "require": {
+        "php": "~7.1.3||~7.2.0",
+        "magento/framework": "*"
+    },
+    "type": "magento2-module",
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "autoload": {
+        "files": [
+            "InventoryReservations/registration.php",
+            "InventoryReservationsApi/registration.php"
+        ],
+        "psr-4": {
+            "ReachDigital\\InventoryReservations\\": "InventoryReservations",
+            "ReachDigital\\InventoryReservationsApi\\": "InventoryReservationsApi"
+        }
+    }
+}
