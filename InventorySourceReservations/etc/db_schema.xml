@@ -9,7 +9,7 @@
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
     <table name="inventory_source_reservation" resource="default" engine="innodb">
         <column xsi:type="int" name="reservation_id" padding="10" unsigned="true" nullable="false" identity="true"/>
-        <column xsi:type="int" name="source_id" padding="10" unsigned="true" nullable="false" identity="false"/>
+        <column xsi:type="varchar" name="source_code" nullable="false" length="64"/>
         <column xsi:type="varchar" name="sku" nullable="false" length="64"/>
         <column xsi:type="decimal" name="quantity" scale="4" precision="10" unsigned="false" nullable="false"
                 default="0"/>
@@ -17,8 +17,8 @@
         <constraint xsi:type="primary" name="PRIMARY">
             <column name="reservation_id"/>
         </constraint>
-        <index name="INVENTORY_RESERVATION_SOURCE_ID_SKU_QUANTITY" indexType="btree">
-            <column name="source_id"/>
+        <index name="INVENTORY_RESERVATION_SOURCE_CODE_SKU_QUANTITY" indexType="btree">
+            <column name="source_code"/>
             <column name="sku"/>
             <column name="quantity"/>
         </index>

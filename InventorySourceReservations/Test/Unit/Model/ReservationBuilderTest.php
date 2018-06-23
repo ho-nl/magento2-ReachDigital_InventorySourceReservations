@@ -70,7 +70,7 @@ class ReservationBuilderTest extends TestCase
     {
         $reservationData = [
             ReservationInterface::RESERVATION_ID => null,
-            ReservationInterface::SOURCE_ID => 1,
+            ReservationInterface::SOURCE_CODE => 1,
             ReservationInterface::SKU => 'somesku',
             ReservationInterface::QUANTITY => 11,
             ReservationInterface::METADATA => 'some meta data',
@@ -78,7 +78,7 @@ class ReservationBuilderTest extends TestCase
 
         $reservationMappedData = [
             'reservationId' => null,
-            'sourceId' => 1,
+            'sourceCode' => 1,
             'sku' => 'somesku',
             'quantity' => 11,
             'metadata' => 'some meta data',
@@ -106,7 +106,7 @@ class ReservationBuilderTest extends TestCase
             ->method('isValid')
             ->willReturn(true);
 
-        $this->reservationBuilder->setSourceId($reservationData[ReservationInterface::SOURCE_ID]);
+        $this->reservationBuilder->setSourceCode($reservationData[ReservationInterface::SOURCE_CODE]);
         $this->reservationBuilder->setSku($reservationData[ReservationInterface::SKU]);
         $this->reservationBuilder->setQuantity($reservationData[ReservationInterface::QUANTITY]);
         $this->reservationBuilder->setMetadata($reservationData[ReservationInterface::METADATA]);
@@ -150,7 +150,7 @@ class ReservationBuilderTest extends TestCase
     public function getSettersAndValues(): array
     {
         return [
-            'with_missing_source_id' => [
+            'with_missing_source_code' => [
                 ['method' => 'setSku', 'argument' => 'somesku'],
                 ['method' => 'setQuantity', 'argument' => 11]
             ],

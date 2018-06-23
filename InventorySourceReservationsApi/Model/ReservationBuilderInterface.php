@@ -17,7 +17,7 @@ use Magento\Framework\Validation\ValidationException;
  */
 interface ReservationBuilderInterface
 {
-    public function setSourceId(int $sourceId): self;
+    public function setSourceCode(string $sourceCode): self;
 
     public function setSku(string $sku): self;
 

@@ -16,4 +16,15 @@
             <argument name="groupConcatMaxLen" xsi:type="number">2000</argument>
         </arguments>
     </type>
+
+
+    <type name="Magento\InventoryIndexer\Indexer\Stock\IndexDataProviderByStockId">
+        <plugin name="AddSourceReservationsToIndexDataByStockIdPlugin"
+                type="ReachDigital\InventorySourceReservations\Plugin\MagentoInventoryIndexer\AddSourceReservationsToIndexDataByStockIdPlugin"/>
+    </type>
+
+    <type name="Magento\InventoryIndexer\Indexer\SourceItem\IndexDataBySkuListProvider">
+        <plugin name="AddSourceReservationsToIndexDataBySkuListPlugin"
+                type="ReachDigital\InventorySourceReservations\Plugin\MagentoInventoryIndexer\AddSourceReservationsToIndexDataBySkuListPlugin"/>
+    </type>
 </config>

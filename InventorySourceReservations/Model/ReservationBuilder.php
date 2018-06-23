@@ -22,7 +22,7 @@ class ReservationBuilder implements ReservationBuilderInterface
     /**
      * @var int
      */
-    private $sourceId;
+    private $source;
 
     /**
      * @var string
@@ -72,9 +72,9 @@ class ReservationBuilder implements ReservationBuilderInterface
     /**
      * @inheritdoc
      */
-    public function setSourceId(int $sourceId): ReservationBuilderInterface
+    public function setSourceCode(string $sourceCode): ReservationBuilderInterface
     {
-        $this->sourceId = $sourceId;
+        $this->source = $sourceCode;
         return $this;
     }
 
@@ -118,7 +118,7 @@ class ReservationBuilder implements ReservationBuilderInterface
 
         $data = [
             ReservationInterface::RESERVATION_ID => null,
-            ReservationInterface::SOURCE_ID => $this->sourceId,
+            ReservationInterface::SOURCE_CODE => $this->source,
             ReservationInterface::SKU => $this->sku,
             ReservationInterface::QUANTITY => $this->quantity,
             ReservationInterface::METADATA => $this->metadata,
@@ -136,8 +136,8 @@ class ReservationBuilder implements ReservationBuilderInterface
     {
         $errors = [];
 
-        if (null === $this->sourceId) {
-            $errors[] = __('"%field" is expected to be a number.', ['field' => ReservationInterface::SOURCE_ID]);
+        if (null === $this->source) {
+            $errors[] = __('"%field" is expected to be a number.', ['field' => ReservationInterface::SOURCE_CODE]);
         }
 
         if (null === $this->sku || '' === trim($this->sku)) {
@@ -157,7 +157,7 @@ class ReservationBuilder implements ReservationBuilderInterface
      */
     private function reset()
     {
-        $this->sourceId = null;
+        $this->source = null;
         $this->sku = null;
         $this->quantity = null;
         $this->metadata = null;

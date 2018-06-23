@@ -2,13 +2,13 @@
   "inventory_source_reservation": {
     "column": {
       "reservation_id": true,
-      "source_id": true,
+      "source_code": true,
       "sku": true,
       "quantity": true,
       "metadata": true
     },
     "index": {
-      "INVENTORY_RESERVATION_SOURCE_ID_SKU_QUANTITY": true
+      "INVENTORY_RESERVATION_SOURCE_CODE_SKU_QUANTITY": true
     },
     "constraint": {
       "PRIMARY": true

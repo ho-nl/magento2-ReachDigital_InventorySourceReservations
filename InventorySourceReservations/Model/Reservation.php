@@ -24,7 +24,7 @@ class Reservation implements ReservationInterface
     /**
      * @var int
      */
-    private $sourceId;
+    private $sourceCode;
 
     /**
      * @var string
@@ -43,20 +43,20 @@ class Reservation implements ReservationInterface
 
     /**
      * @param int|null $reservationId
-     * @param int $sourceId
+     * @param string $sourceCode
      * @param string $sku
      * @param float $quantity
      * @param null $metadata
      */
     public function __construct(
         $reservationId,
-        int $sourceId,
+        string $sourceCode,
         string $sku,
         float $quantity,
         $metadata = null
     ) {
         $this->reservationId = $reservationId;
-        $this->sourceId = $sourceId;
+        $this->sourceCode = $sourceCode;
         $this->sku = $sku;
         $this->quantity = $quantity;
         $this->metadata = $metadata;
@@ -73,9 +73,9 @@ class Reservation implements ReservationInterface
     /**
      * @inheritdoc
      */
-    public function getSourceId(): int
+    public function getSourceCode(): string
     {
-        return $this->sourceId;
+        return $this->sourceCode;
     }
 
     /**

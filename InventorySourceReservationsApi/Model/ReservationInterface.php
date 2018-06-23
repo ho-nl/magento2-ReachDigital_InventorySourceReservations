@@ -21,14 +21,14 @@ interface ReservationInterface
      * Constants for keys of data array. Identical to the name of the getter in snake case
      */
     public const RESERVATION_ID = 'reservation_id';
-    public const SOURCE_ID = 'source_id';
+    public const SOURCE_CODE = 'source_code';
     public const SKU = 'sku';
     public const QUANTITY = 'quantity';
     public const METADATA = 'metadata';
 
     public function getReservationId(): ?int;
 
-    public function getSourceId(): int;
+    public function getSourceCode(): string;
 
     public function getSku(): string;
 

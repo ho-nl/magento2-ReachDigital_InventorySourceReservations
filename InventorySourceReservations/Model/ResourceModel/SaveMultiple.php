@@ -40,7 +40,7 @@ class SaveMultiple
         $tableName = $this->resourceConnection->getTableName('inventory_source_reservation');
 
         $columns = [
-            ReservationInterface::SOURCE_ID,
+            ReservationInterface::SOURCE_CODE,
             ReservationInterface::SKU,
             ReservationInterface::QUANTITY,
             ReservationInterface::METADATA,
@@ -50,7 +50,7 @@ class SaveMultiple
         /** @var ReservationInterface $reservation */
         foreach ($reservations as $reservation) {
             $data[] = [
-                $reservation->getSourceId(),
+                $reservation->getSourceCode(),
                 $reservation->getSku(),
                 $reservation->getQuantity(),
                 $reservation->getMetadata(),

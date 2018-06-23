@@ -33,7 +33,7 @@ class GetReservationsQuantity implements GetReservationsQuantityInterface
     /**
      * @inheritdoc
      */
-    public function execute(string $sku, int $sourceId): float
+    public function execute(string $sku, string $sourceCode): float
     {
         $connection = $this->resource->getConnection();
         $reservationTable = $this->resource->getTableName('inventory_source_reservation');
@@ -41,7 +41,7 @@ class GetReservationsQuantity implements GetReservationsQuantityInterface
         $select = $connection->select()
             ->from($reservationTable, [ReservationInterface::QUANTITY => 'SUM(' . ReservationInterface::QUANTITY . ')'])
             ->where(ReservationInterface::SKU . ' = ?', $sku)
-            ->where(ReservationInterface::SOURCE_ID . ' = ?', $sourceId)
+            ->where(ReservationInterface::SOURCE_CODE . ' = ?', $sourceCode)
             ->limit(1);
 
         return (float) $connection->fetchOne($select) ?: (float) 0;

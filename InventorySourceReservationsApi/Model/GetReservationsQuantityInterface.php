@@ -18,8 +18,8 @@ interface GetReservationsQuantityInterface
      * Given a product sku and a stock id, return reservation quantity
      *
      * @param string $sku
-     * @param int $sourceId
+     * @param int $sourceCode
      * @return float
      */
-    public function execute(string $sku, int $sourceId): float;
+    public function execute(string $sku, string $sourceCode): float;
 }
