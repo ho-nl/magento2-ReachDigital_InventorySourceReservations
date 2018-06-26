@@ -5,7 +5,11 @@
  */
 namespace ReachDigital\InventorySourceReservations\Test\Integration\Plugin\MagentoInventoryIndexer;
 
+use Magento\Inventory\Model\SourceItem;
 use Magento\InventoryIndexer\Indexer\Source\SourceIndexer;
+use Magento\InventoryIndexer\Indexer\SourceItem\GetSourceItemIds;
+use Magento\InventoryIndexer\Indexer\SourceItem\IndexDataBySkuListProvider;
+use Magento\InventoryIndexer\Indexer\SourceItem\SourceItemIndexer;
 use Magento\InventoryIndexer\Model\ResourceModel\GetStockItemData;
 use Magento\InventoryIndexer\Test\Integration\Indexer\RemoveIndexData;
 use Magento\InventorySalesApi\Model\GetStockItemDataInterface;
@@ -15,13 +19,13 @@ use ReachDigital\InventorySourceReservations\Model\AppendReservations;
 use ReachDigital\InventorySourceReservations\Model\ReservationBuilder;
 use ReachDigital\InventorySourceReservations\Model\ResourceModel\CleanupReservations;
 
-class AppendSourceReservationsToStockReservationsTest extends TestCase
+class AddSourceReservationsToIndexDataBySkuListPluginTest extends TestCase
 {
 
     /**
-     * @var SourceIndexer
+     * @var SourceItemIndexer
      */
-    private $sourceIndexer;
+    private $sourceItemIndexer;
 
     /**
      * @var GetStockItemData
@@ -42,10 +46,15 @@ class AppendSourceReservationsToStockReservationsTest extends TestCase
     /** @var CleanupReservations */
     private $cleanupReservations;
 
+    /** @var GetSourceItemIds */
+    private $getSourceItemIds;
+
+    /** @var IndexDataBySkuListProvider */
+    private $indexDataBySkuListProvider;
+
     protected function setUp()
     {
-        $this->sourceIndexer = Bootstrap::getObjectManager()->get(SourceIndexer::class);
-        $this->getStockItemData = Bootstrap::getObjectManager()->get(GetStockItemData::class);
+        $this->indexDataBySkuListProvider = Bootstrap::getObjectManager()->get(IndexDataBySkuListProvider::class);
 
         $this->removeIndexData = Bootstrap::getObjectManager()->get(RemoveIndexData::class);
         $this->reservationBuilder = Bootstrap::getObjectManager()->get(ReservationBuilder::class);
@@ -67,8 +76,7 @@ class AppendSourceReservationsToStockReservationsTest extends TestCase
      * Source 'eu-1' is assigned on EU-stock(id:10) and Global-stock(id:30)
      * Thus these stocks stocks be reindexed
      *
-     * @covers \ReachDigital\InventorySourceReservations\Plugin\MagentoInventoryIndexer\AddSourceReservationsToIndexDataByStockIdPlugin
-     * @test
+     * @covers             \ReachDigital\InventorySourceReservations\Plugin\MagentoInventoryIndexer\AddSourceReservationsToIndexDataByStockIdPlugin
      *
      * @magentoDataFixture ../../../../app/code/Magento/InventoryApi/Test/_files/products.php
      * @magentoDataFixture ../../../../app/code/Magento/InventoryApi/Test/_files/sources.php
@@ -76,32 +84,39 @@ class AppendSourceReservationsToStockReservationsTest extends TestCase
      * @magentoDataFixture ../../../../app/code/Magento/InventoryApi/Test/_files/source_items.php
      * @magentoDataFixture ../../../../app/code/Magento/InventoryApi/Test/_files/stock_source_links.php
      *
-     * @param string $sku
-     * @param int $stockId
+     * @param string     $sku
+     * @param int        $stockId
+     * @param float      $reservation
      * @param array|null $expectedData
      *
-     * @dataProvider should_add_the_reservation_amount_to_the_indexed_amount_data_provider
+     * @dataProvider dataProvider
      *
      * @magentoDbIsolation disabled
      */
-    public function should_add_the_reservation_amount_to_the_indexed_amount(
+    public function testAddSourceReservationToIndexDataBySkuList(
         string $sku,
         int $stockId,
         float $reservation,
-        array $expectedData
+        ?array $expectedData
     ): void {
         $this->appendReservation('eu-1', $sku, $reservation, 'test');
-        $this->sourceIndexer->executeRow('eu-1');
-        $stockItemData = $this->getStockItemData->execute($sku, $stockId);
+        $indexData = $this->indexDataBySkuListProvider->execute($stockId, [$sku]);
+
+        if (! $indexData) {
+            self::assertEquals($expectedData, $indexData);
+        } else {
+            $stockItemData = iterator_to_array($indexData)[0];
+            self::assertEquals($expectedData[GetStockItemDataInterface::QUANTITY], $stockItemData[GetStockItemDataInterface::QUANTITY]);
+            self::assertEquals($expectedData[GetStockItemDataInterface::IS_SALABLE], $stockItemData[GetStockItemDataInterface::IS_SALABLE]);
+        }
 
         $this->appendReservation('eu-1', $sku, $reservation *- 1, 'test');
-        self::assertEquals($expectedData, $stockItemData);
     }
 
     /**
      * @return array
      */
-    public function should_add_the_reservation_amount_to_the_indexed_amount_data_provider(): array
+    public function dataProvider(): array
     {
         return [
             ['SKU-1', 10, 5, [GetStockItemDataInterface::QUANTITY => 8.5+5, GetStockItemDataInterface::IS_SALABLE => 1]],

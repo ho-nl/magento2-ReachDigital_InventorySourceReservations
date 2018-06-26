@@ -42,6 +42,7 @@ class AppendReservations implements AppendReservationsInterface
     }
 
     /**
+     * @todo Run indexer when a reservation has been made.
      * @inheritdoc
      */
     public function execute(array $reservations)

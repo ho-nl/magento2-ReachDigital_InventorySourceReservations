@@ -1,10 +1,13 @@
 # Magento 2 Inventory Source Reservations
 
-Ability to register reservations on sources.
+Ability to register reservations on sources. Allows us to defer the actual source deduction further by allowing us to
+reserve qty's on the source.
 
 Module structure:
 - InventorySourceReservationsApi: Reservation Interfaces to CRUD reservations on top of sources.
 - InventorySourceReservations: Implementation of the above interfaces.
+
+
 
 - InventorySourceShipmentReservationApi
 - InventorySourceShipmentReservation
