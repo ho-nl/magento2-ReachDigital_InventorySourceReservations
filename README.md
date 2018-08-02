@@ -4,8 +4,8 @@ Ability to register reservations on sources. Allows us to defer the actual sourc
 reserve qty's on the source.
 
 Module structure:
-- InventorySourceReservationsApi: Reservation Interfaces to CRUD reservations on top of sources.
-- InventorySourceReservations: Implementation of the above interfaces.
+- ISReservationsApi: Reservation Interfaces to CRUD reservations on top of sources.
+- ISReservations: Implementation of the above interfaces.
 
 
 
