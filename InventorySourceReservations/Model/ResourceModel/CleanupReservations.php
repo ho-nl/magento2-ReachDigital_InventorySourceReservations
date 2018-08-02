@@ -43,6 +43,9 @@ class CleanupReservations implements CleanupReservationsInterface
      */
     public function execute()
     {
+        //@todo Fix.
+
+        return;
         $connection = $this->resource->getConnection();
         $reservationTable = $this->resource->getTableName('inventory_source_reservation');
 

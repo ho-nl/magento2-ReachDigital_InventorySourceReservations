@@ -26,6 +26,7 @@ class AppendReservationsToIndexData
     /**
      * @todo We should take min_qty of the product in account, that can be negative.
      * @todo We should take the backorder status of the product in account, that can be enabled.
+     * @todo We should check if the is_in_stock value is 1 or 0.
      * Should probably be completely replaced by some of the more abstract stuff and should be implemented in the query.
      *
      * @param array $indexRow
