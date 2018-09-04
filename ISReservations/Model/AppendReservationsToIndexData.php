@@ -15,7 +15,7 @@ class AppendReservationsToIndexData
         $indexDataArr = iterator_to_array($indexData);
         foreach ($indexDataArr as &$indexRow) {
             $reservation = $reservations[$indexRow[IndexStructure::SKU]] ?? false;
-            if ($reservation) {
+            if (\is_array($reservation)) {
                 $indexRow[IndexStructure::IS_SALABLE] = $this->isSalable($indexRow, $reservation);
                 $indexRow[IndexStructure::QUANTITY] += (float) $reservation[ReservationInterface::QUANTITY];
             }
