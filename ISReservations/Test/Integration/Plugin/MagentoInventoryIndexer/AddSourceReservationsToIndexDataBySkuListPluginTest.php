@@ -76,7 +76,7 @@ class AddSourceReservationsToIndexDataBySkuListPluginTest extends TestCase
      * Source 'eu-1' is assigned on EU-stock(id:10) and Global-stock(id:30)
      * Thus these stocks stocks be reindexed
      *
-     * @covers             \ReachDigital\ISReservations\Plugin\MagentoInventoryIndexer\AddSourceReservationsToIndexDataByStockIdPlugin
+     * @covers \ReachDigital\ISReservations\Plugin\MagentoInventoryIndexer\AddSourceReservationsToIndexDataByStockIdPlugin
      *
      * @magentoDataFixture ../../../../app/code/Magento/InventoryApi/Test/_files/products.php
      * @magentoDataFixture ../../../../app/code/Magento/InventoryApi/Test/_files/sources.php
