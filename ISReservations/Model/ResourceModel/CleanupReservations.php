@@ -43,23 +43,30 @@ class CleanupReservations implements CleanupReservationsInterface
      */
     public function execute()
     {
-        //@todo Fix.
-
         return;
-        $connection = $this->resource->getConnection();
-        $reservationTable = $this->resource->getTableName('inventory_source_reservation');
 
-        $select = $connection->select()
-            ->from(
-                $reservationTable,
-                ['GROUP_CONCAT(' . ReservationInterface::RESERVATION_ID . ')']
-            )
-            ->group([ReservationInterface::SOURCE_CODE, ReservationInterface::SKU])
-            ->having('SUM(' . ReservationInterface::QUANTITY . ') = 0');
-            $connection->query('SET group_concat_max_len = ' . $this->groupConcatMaxLen);
-        $groupedReservationIds = implode(',', $connection->fetchCol($select));
+//      The CleanupReservations method is currently disabled, because this class removes all rows that sum to
+//      0. We can't do that because we are interesed in certain rows of the reservation table instead of only
+//      the sum of the reservation of an item. We can consider making the group statement different and clean
+//      up reservations that way; E.g. Purchase orders that were reserved and ultimately fulfilled.
+//
+//      For now we'll leave this method disabled as there aren't any performance issues yet, this table can
+//      probably easily be millions of rows before it will become slow.
 
-        $condition = [ReservationInterface::RESERVATION_ID . ' IN (?)' => explode(',', $groupedReservationIds)];
-        $connection->delete($reservationTable, $condition);
+//        $connection = $this->resource->getConnection();
+//        $reservationTable = $this->resource->getTableName('inventory_source_reservation');
+//
+//        $select = $connection->select()
+//            ->from(
+//                $reservationTable,
+//                ['GROUP_CONCAT(' . ReservationInterface::RESERVATION_ID . ')']
+//            )
+//            ->group([ReservationInterface::SOURCE_CODE, ReservationInterface::SKU])
+//            ->having('SUM(' . ReservationInterface::QUANTITY . ') = 0');
+//            $connection->query('SET group_concat_max_len = ' . $this->groupConcatMaxLen);
+//        $groupedReservationIds = implode(',', $connection->fetchCol($select));
+//
+//        $condition = [ReservationInterface::RESERVATION_ID . ' IN (?)' => explode(',', $groupedReservationIds)];
+//        $connection->delete($reservationTable, $condition);
     }
 }
