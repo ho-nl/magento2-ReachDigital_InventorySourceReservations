@@ -17,10 +17,13 @@
         <constraint xsi:type="primary" name="PRIMARY">
             <column name="reservation_id"/>
         </constraint>
-        <index name="INVENTORY_RESERVATION_SOURCE_CODE_SKU_QUANTITY" indexType="btree">
+        <index name="INVENTORY_SOURCE_RESERVATION_CODE_SKU_QUANTITY" indexType="btree">
             <column name="source_code"/>
             <column name="sku"/>
             <column name="quantity"/>
+        </index>
+        <index name="INVENTORY_SOURCE_RESERVATION_METADATA" indexType="btree">
+            <column name="metadata"/>
         </index>
     </table>
 </schema>
