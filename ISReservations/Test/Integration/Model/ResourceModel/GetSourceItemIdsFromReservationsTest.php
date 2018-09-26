@@ -36,6 +36,9 @@ class GetSourceItemIdsFromReservationsTest extends TestCase
     /** @var GetSourceItemIdsFromReservations */
     private $getSourceItemByReservations;
 
+    /** @var GetReservationsByMetadata */
+    private $getReservationsByMetadata;
+
     protected function setUp()
     {
         $this->getReservationQuantity = Bootstrap::getObjectManager()->get(GetSourceItemIdsFromReservations::class);
@@ -44,6 +47,7 @@ class GetSourceItemIdsFromReservationsTest extends TestCase
         $this->appendReservations = Bootstrap::getObjectManager()->get(AppendReservations::class);
         $this->reservationBuilder = Bootstrap::getObjectManager()->get(ReservationBuilder::class);
         $this->getSourceItemByReservations = Bootstrap::getObjectManager()->get(GetSourceItemIdsFromReservations::class);
+        $this->getReservationsByMetadata = Bootstrap::getObjectManager()->get(GetReservationsByMetadata::class);
     }
 
     protected function tearDown()
@@ -60,6 +64,8 @@ class GetSourceItemIdsFromReservationsTest extends TestCase
      * @magentoDataFixture ../../../../app/code/Magento/InventoryApi/Test/_files/source_items.php
      * @magentoDataFixture ../../../../app/code/Magento/InventoryApi/Test/_files/stock_source_links.php
      *
+     * @todo Test multiple reservations case? Maybe with dataprovider?
+     *
      * @throws
      */
     public function should_provide_correct_source_item_ids_from_reservations(): void
@@ -73,14 +79,17 @@ class GetSourceItemIdsFromReservationsTest extends TestCase
         $itemId = $item->getId();
 
         // Make a reservation on it
-        $reservation = $this->appendReservation($item->getSourceCode(), $item->getSku(), 4, 'test'); // @todo test multiple reservations case, maybe with dataprovider?
+        $this->appendReservation($item->getSourceCode(), $item->getSku(), 4, 'test_ids');
+
+        // Obtain inserted reservation
+        $reservations = $this->getReservationsByMetadata->execute('test_ids');
 
         // Obtain source item ID by reservation(s)
-        $reseverationIds = $this->getSourceItemByReservations->execute([$reservation]);
+        $testItemIds = $this->getSourceItemByReservations->execute($reservations);
 
-        // Assert that obtained ID matches original source item ID
-        $this->assertSameSize([$itemId], $reseverationIds);
-        $this->assertEquals($itemId, array_pop($reseverationIds));
+        // Assert that obtained source item ID matches original source item ID
+        $this->assertSameSize([$itemId], $testItemIds);
+        $this->assertEquals($itemId, array_pop($testItemIds));
     }
 
     /**
@@ -88,7 +97,7 @@ class GetSourceItemIdsFromReservationsTest extends TestCase
      * @throws \Magento\Framework\Exception\InputException
      * @throws \Magento\Framework\Validation\ValidationException
      */
-    private function appendReservation(string $sourceCode, string $sku, float $quantity, string $metaData) : ReservationInterface
+    private function appendReservation(string $sourceCode, string $sku, float $quantity, string $metaData): void
     {
         $this->reservationBuilder->setSourceCode($sourceCode);
         $this->reservationBuilder->setQuantity($quantity);
@@ -96,6 +105,5 @@ class GetSourceItemIdsFromReservationsTest extends TestCase
         $this->reservationBuilder->setMetadata($metaData);
         $reservation = $this->reservationBuilder->build();
         $this->appendReservations->execute([$reservation]);
-        return $reservation;
     }
 }
