@@ -36,9 +36,6 @@ class GetSourceItemIdsFromReservationsTest extends TestCase
     /** @var GetSourceItemIdsFromReservations */
     private $getSourceItemByReservations;
 
-    /** @var GetReservationsByMetadata */
-    private $getReservationsByMetadata;
-
     protected function setUp()
     {
         $this->getReservationQuantity = Bootstrap::getObjectManager()->get(GetSourceItemIdsFromReservations::class);
@@ -47,7 +44,6 @@ class GetSourceItemIdsFromReservationsTest extends TestCase
         $this->appendReservations = Bootstrap::getObjectManager()->get(AppendReservations::class);
         $this->reservationBuilder = Bootstrap::getObjectManager()->get(ReservationBuilder::class);
         $this->getSourceItemByReservations = Bootstrap::getObjectManager()->get(GetSourceItemIdsFromReservations::class);
-        $this->getReservationsByMetadata = Bootstrap::getObjectManager()->get(GetReservationsByMetadata::class);
     }
 
     protected function tearDown()
@@ -79,13 +75,10 @@ class GetSourceItemIdsFromReservationsTest extends TestCase
         $itemId = $item->getId();
 
         // Make a reservation on it
-        $this->appendReservation($item->getSourceCode(), $item->getSku(), 4, 'test_ids');
-
-        // Obtain inserted reservation
-        $reservations = $this->getReservationsByMetadata->execute('test_ids');
+        $reservation = $this->appendReservation($item->getSourceCode(), $item->getSku(), 4, 'test_ids');
 
         // Obtain source item ID by reservation(s)
-        $testItemIds = $this->getSourceItemByReservations->execute($reservations);
+        $testItemIds = $this->getSourceItemByReservations->execute([$reservation]);
 
         // Assert that obtained source item ID matches original source item ID
         self::assertSameSize([$itemId], $testItemIds);
@@ -97,7 +90,7 @@ class GetSourceItemIdsFromReservationsTest extends TestCase
      * @throws \Magento\Framework\Exception\InputException
      * @throws \Magento\Framework\Validation\ValidationException
      */
-    private function appendReservation(string $sourceCode, string $sku, float $quantity, string $metaData): void
+    private function appendReservation(string $sourceCode, string $sku, float $quantity, string $metaData): ReservationInterface
     {
         $this->reservationBuilder->setSourceCode($sourceCode);
         $this->reservationBuilder->setQuantity($quantity);
@@ -105,5 +98,6 @@ class GetSourceItemIdsFromReservationsTest extends TestCase
         $this->reservationBuilder->setMetadata($metaData);
         $reservation = $this->reservationBuilder->build();
         $this->appendReservations->execute([$reservation]);
+        return $reservation;
     }
 }
