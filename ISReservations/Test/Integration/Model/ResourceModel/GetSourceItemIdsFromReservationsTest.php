@@ -88,8 +88,8 @@ class GetSourceItemIdsFromReservationsTest extends TestCase
         $testItemIds = $this->getSourceItemByReservations->execute($reservations);
 
         // Assert that obtained source item ID matches original source item ID
-        $this->assertSameSize([$itemId], $testItemIds);
-        $this->assertEquals($itemId, array_pop($testItemIds));
+        self::assertSameSize([$itemId], $testItemIds);
+        self::assertEquals($itemId, array_pop($testItemIds));
     }
 
     /**
