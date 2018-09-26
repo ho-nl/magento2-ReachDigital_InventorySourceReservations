@@ -6,11 +6,10 @@
 namespace ReachDigital\ISReservations\Model\ResourceModel;
 
 use Magento\Framework\App\ResourceConnection;
-use Magento\Inventory\Model\ResourceModel\Source as SourceResourceModel;
-use Magento\Inventory\Model\ResourceModel\StockSourceLink as StockSourceLinkResourceModel;
-use Magento\Inventory\Model\StockSourceLink;
-use Magento\InventoryApi\Api\Data\SourceInterface;
+use Magento\Inventory\Model\ResourceModel\SourceItem;
 use Magento\InventoryApi\Api\Data\SourceItemInterface;
+use ReachDigital\ISReservations\Model\Reservation;
+use ReachDigital\ISReservationsApi\Model\ReservationInterface;
 
 class GetSourceItemIdsFromReservations
 {
@@ -33,24 +32,24 @@ class GetSourceItemIdsFromReservations
      */
     public function execute(array $reservations): array
     {
-        // @todo
-//        $connection = $this->resourceConnection->getConnection();
-//        $sourceTable = $this->resourceConnection->getTableName(SourceResourceModel::TABLE_NAME_SOURCE);
-//        $sourceStockLinkTable = $this->resourceConnection->getTableName(
-//            StockSourceLinkResourceModel::TABLE_NAME_STOCK_SOURCE_LINK
-//        );
-//
-//        $select = $connection->select()
-//            ->from(['source' => $sourceTable], [SourceInterface::SOURCE_CODE])
-//            ->joinInner(
-//                ['stock_source_link' => $sourceStockLinkTable],
-//                'source.' . SourceItemInterface::SOURCE_CODE . ' = stock_source_link.' . StockSourceLink::SOURCE_CODE,
-//                []
-//            )
-//            ->where('stock_source_link.' . StockSourceLink::STOCK_ID . ' = ?', $stockId)
-//            ->where(SourceInterface::ENABLED . ' = ?', 1);
-//
-//        return $connection->fetchCol($select);
-        return $reservations;
+        $connection = $this->resourceConnection->getConnection();
+        $sourceItemTable = $this->resourceConnection->getTableName(SourceItem::TABLE_NAME_SOURCE_ITEM);
+        $sourceReservationTable = $this->resourceConnection->getTableName('inventory_source_reservation'); // @fixme no resourcemodel?
+
+        $reservationIds = [];
+        /** @var Reservation $reservation */
+        foreach ($reservations as $reservation) {
+            $reservationIds[] = $reservation->getReservationId();
+        }
+
+        $select = $connection->select()
+            ->from([ 'sr' => $sourceReservationTable ], [])
+            ->joinInner(
+                [ 'si' => $sourceItemTable ],
+                'si.'.SourceItemInterface::SOURCE_CODE.' = sr.'.ReservationInterface::SOURCE_CODE.' and si.'.SourceItemInterface::SKU.' = sr.'.ReservationInterface::SKU,
+                [ 'si.'.SourceItem::ID_FIELD_NAME ]
+            )
+            ->where('sr.'.ReservationInterface::RESERVATION_ID.' IN(?)', $reservationIds);
+        return array_unique($connection->fetchCol($select));
     }
 }
