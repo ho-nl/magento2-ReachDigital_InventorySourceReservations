@@ -69,9 +69,9 @@ class AppendReservationsTest extends TestCase
         $origStockData = $this->getStockItemData->execute('SKU-1', 30);
 
         // Append some reservations to different sources, indexed stock quantity is not affected by disabled sources
-        $this->appendReservation('eu-1', 'SKU-1', 3, 'test_index_trigger');
-        $this->appendReservation('eu-2', 'SKU-1', 3, 'test_index_trigger');
-        $this->appendReservation('eu-disabled', 'SKU-1', 3, 'test_index_trigger');
+        $this->appendReservation('eu-1', 'SKU-1', -3, 'test_index_trigger');
+        $this->appendReservation('eu-2', 'SKU-1', -3, 'test_index_trigger');
+        $this->appendReservation('eu-disabled', 'SKU-1', -3, 'test_index_trigger');
 
         // Check indexed quantity. Must have decreased by 6.
         $newStockData = $this->getStockItemData->execute('SKU-1', 30);
