@@ -81,7 +81,6 @@ class AppendReservations implements AppendReservationsInterface
         }
         try {
             $this->saveMultiple->execute($reservations);
-            // @todo write mview.xml
             $sourceItemIds = $this->getSourceItemIdsFromReservations->execute($reservations);
             $this->sourceItemIndexer->executeList($sourceItemIds);
         } catch (\Exception $e) {
