@@ -62,7 +62,7 @@ class AppendReservations implements AppendReservationsInterface
     /**
      * @inheritdoc
      */
-    public function execute(array $reservations)
+    public function execute(array $reservations): void
     {
         if (empty($reservations)) {
             throw new InputException(__('Input data is empty'));
@@ -81,9 +81,9 @@ class AppendReservations implements AppendReservationsInterface
         }
         try {
             $this->saveMultiple->execute($reservations);
-            // @todo should we check if indexer is async?
-//            $sourceItemIds = $this->getSourceItemIdsFromReservations->execute($reservations);
-//            $this->sourceItemIndexer->executeList($sourceItemIds);
+            // @todo write mview.xml
+            $sourceItemIds = $this->getSourceItemIdsFromReservations->execute($reservations);
+            $this->sourceItemIndexer->executeList($sourceItemIds);
         } catch (\Exception $e) {
             $this->logger->error($e->getMessage());
             throw new CouldNotSaveException(__('Could not append Reservation'), $e);
