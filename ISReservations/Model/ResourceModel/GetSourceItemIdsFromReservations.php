@@ -25,6 +25,9 @@ class GetSourceItemIdsFromReservations
     }
 
     /**
+     * Given one or more source reservations, find the relevant source items. The given reservations need not actually
+     * be inserted (or have a reservation_id value); lookup is done by SKU and source code combination.
+     *
      * @param array $reservations
      *
      * @return array
@@ -34,22 +37,21 @@ class GetSourceItemIdsFromReservations
     {
         $connection = $this->resourceConnection->getConnection();
         $sourceItemTable = $this->resourceConnection->getTableName(SourceItem::TABLE_NAME_SOURCE_ITEM);
-        $sourceReservationTable = $this->resourceConnection->getTableName('inventory_source_reservation'); // @fixme no resourcemodel?
 
-        $reservationIds = [];
+        // Build condition based on sku/source_code, since we can't rely on having reservation IDs to do a join with
+        $whereParts = [];
         /** @var Reservation $reservation */
         foreach ($reservations as $reservation) {
-            $reservationIds[] = $reservation->getReservationId();
+            $skuEquals = $connection->prepareSqlCondition('si.'.ReservationInterface::SKU, [ 'eq' => $reservation->getSku() ]);
+            $sourceCodeEquals = $connection->prepareSqlCondition('si.'.ReservationInterface::SOURCE_CODE, [ 'eq' => $reservation->getSourceCode() ]);
+            $whereParts[] = "($skuEquals AND $sourceCodeEquals)";
         }
+        $whereCondition = '(' . implode(' OR ', $whereParts) . ')';
 
         $select = $connection->select()
-            ->from([ 'sr' => $sourceReservationTable ], [])
-            ->joinInner(
-                [ 'si' => $sourceItemTable ],
-                'si.'.SourceItemInterface::SOURCE_CODE.' = sr.'.ReservationInterface::SOURCE_CODE.' and si.'.SourceItemInterface::SKU.' = sr.'.ReservationInterface::SKU,
-                [ 'si.'.SourceItem::ID_FIELD_NAME ]
-            )
-            ->where('sr.'.ReservationInterface::RESERVATION_ID.' IN(?)', $reservationIds);
+            ->from([ 'si' => $sourceItemTable ], [ 'si.'.SourceItem::ID_FIELD_NAME ])
+            ->where($whereCondition);
+
         return array_unique($connection->fetchCol($select));
     }
 }
