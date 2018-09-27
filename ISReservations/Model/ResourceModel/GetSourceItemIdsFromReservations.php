@@ -38,6 +38,10 @@ class GetSourceItemIdsFromReservations
         $connection = $this->resourceConnection->getConnection();
         $sourceItemTable = $this->resourceConnection->getTableName(SourceItem::TABLE_NAME_SOURCE_ITEM);
 
+        if (!count($reservations)) {
+            return [];
+        }
+
         // Build condition based on sku/source_code, since we can't rely on having reservation IDs to do a join with
         $whereParts = [];
         /** @var Reservation $reservation */

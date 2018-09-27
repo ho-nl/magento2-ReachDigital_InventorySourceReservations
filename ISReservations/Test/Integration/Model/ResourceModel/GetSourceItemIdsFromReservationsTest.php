@@ -60,29 +60,32 @@ class GetSourceItemIdsFromReservationsTest extends TestCase
      * @magentoDataFixture ../../../../app/code/Magento/InventoryApi/Test/_files/source_items.php
      * @magentoDataFixture ../../../../app/code/Magento/InventoryApi/Test/_files/stock_source_links.php
      *
-     * @todo Test multiple reservations case? Maybe with dataprovider?
+     * @magentoDbIsolation disabled
      *
      * @throws
      */
     public function should_provide_correct_source_item_ids_from_reservations(): void
     {
-        // Get a source item
+        // Get some source items
         $searchCriteria = $this->searchCriteriaBuilder->create();
         $sourceItems = $this->sourceItemRepository->getList($searchCriteria)->getItems();
 
+        $itemIds = [];
+        $reservations = [];
+
+        // Make reservations on it
         /** @var SourceItem $item */
-        $item = array_pop($sourceItems);
-        $itemId = $item->getId();
+        foreach ($sourceItems as $item) {
+            $reservations[] = $this->appendReservation($item->getSourceCode(), $item->getSku(), 1, 'test_source_item_ids_from_reservations');
+            $itemIds[] = $item->getId();
+        }
 
-        // Make a reservation on it
-        $reservation = $this->appendReservation($item->getSourceCode(), $item->getSku(), 4, 'test_ids');
-
-        // Obtain source item ID by reservation(s)
-        $testItemIds = $this->getSourceItemByReservations->execute([$reservation]);
+        // Obtain source item IDs by newly appended reservations
+        $testItemIds = $this->getSourceItemByReservations->execute($reservations);
 
         // Assert that obtained source item ID matches original source item ID
-        self::assertSameSize([$itemId], $testItemIds);
-        self::assertEquals($itemId, array_pop($testItemIds));
+        self::assertSameSize($itemIds, $testItemIds);
+        self::assertEquals(array_diff($itemIds, $testItemIds), []);
     }
 
     /**
