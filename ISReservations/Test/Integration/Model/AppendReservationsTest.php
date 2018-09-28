@@ -77,6 +77,11 @@ class AppendReservationsTest extends TestCase
         $newStockData = $this->getStockItemData->execute('SKU-1', 30);
 
         self::assertEquals($origStockData['quantity'] - 6, $newStockData['quantity'], 'Asserting that new indexed quantity has decreased');
+
+        // Append some reservations to different sources, indexed stock quantity is not affected by disabled sources
+        $this->appendReservation('eu-1', 'SKU-1', 3, 'test_index_trigger_rollback');
+        $this->appendReservation('eu-2', 'SKU-1', 3, 'test_index_trigger_rollback');
+        $this->appendReservation('eu-disabled', 'SKU-1', 3, 'test_index_trigger_rollback');
     }
 
     /**
