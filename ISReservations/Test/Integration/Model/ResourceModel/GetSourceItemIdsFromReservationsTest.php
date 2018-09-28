@@ -54,11 +54,11 @@ class GetSourceItemIdsFromReservationsTest extends TestCase
      * @test
      * @covers \ReachDigital\ISReservations\Model\ResourceModel\GetSourceItemIdsFromReservations
      *
-     * @magentoDataFixture ../../../../app/code/Magento/InventoryApi/Test/_files/products.php
-     * @magentoDataFixture ../../../../app/code/Magento/InventoryApi/Test/_files/sources.php
-     * @magentoDataFixture ../../../../app/code/Magento/InventoryApi/Test/_files/stocks.php
-     * @magentoDataFixture ../../../../app/code/Magento/InventoryApi/Test/_files/source_items.php
-     * @magentoDataFixture ../../../../app/code/Magento/InventoryApi/Test/_files/stock_source_links.php
+     * @magentoDataFixture ../../../../vendor/magento/module-inventory-api/Test/_files/products.php
+     * @magentoDataFixture ../../../../vendor/magento/module-inventory-api/Test/_files/sources.php
+     * @magentoDataFixture ../../../../vendor/magento/module-inventory-api/Test/_files/stocks.php
+     * @magentoDataFixture ../../../../vendor/magento/module-inventory-api/Test/_files/source_items.php
+     * @magentoDataFixture ../../../../vendor/magento/module-inventory-api/Test/_files/stock_source_links.php
      *
      * @magentoDbIsolation disabled
      *
