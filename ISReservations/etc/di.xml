@@ -18,13 +18,25 @@
     </type>
 
 
-    <type name="Magento\InventoryIndexer\Indexer\Stock\IndexDataProviderByStockId">
-        <plugin name="AddSourceReservationsToIndexDataByStockIdPlugin"
-                type="ReachDigital\ISReservations\Plugin\MagentoInventoryIndexer\AddSourceReservationsToIndexDataByStockIdPlugin"/>
+    <type name="Magento\InventoryIndexer\Indexer\SelectBuilder">
+        <plugin name="add_source_reserversation_qty_to_stock_indexer"
+                type="ReachDigital\ISReservations\Plugin\MagentoInventoryIndexer\AddSourceReserversationsQtyToIsSalableConditionsPlugin"/>
     </type>
 
-    <type name="Magento\InventoryIndexer\Indexer\SourceItem\IndexDataBySkuListProvider">
-        <plugin name="AddSourceReservationsToIndexDataBySkuListPlugin"
-                type="ReachDigital\ISReservations\Plugin\MagentoInventoryIndexer\AddSourceReservationsToIndexDataBySkuListPlugin"/>
+    <type name="ReachDigital\ISReservations\Plugin\MagentoInventoryIndexer\AddSourceReserversationsQtyToIsSalableConditionsPlugin">
+        <arguments>
+            <argument name="productTableName" xsi:type="string">catalog_product_entity</argument>
+        </arguments>
     </type>
+
+    <!-- @todo -->
+    <!--<type name="\Magento\InventorySales\Model\ResourceModel\IsStockItemSalableCondition\BackordersCondition">-->
+        <!--<plugin name="BackordersConditionPlugin" type="ReachDigital\ISReservations\Plugin\MagentoInventorySales\BackordersConditionPlugin"/>-->
+    <!--</type>-->
+    <!--<type name="\Magento\InventorySales\Model\ResourceModel\IsStockItemSalableCondition\MinQtyStockCondition">-->
+        <!--<plugin name="MinQtyStockConditionPlugin" type="ReachDigital\ISReservations\Plugin\MagentoInventorySales\MinQtyStockConditionPlugin"/>-->
+    <!--</type>-->
+    <!--<type name="\Magento\InventorySales\Model\ResourceModel\IsStockItemSalableCondition\BackordersCondition">-->
+        <!--<plugin name="BackordersConditionPlugin" type="ReachDigital\ISReservations\Plugin\MagentoInventorySales\BackordersConditionPlugin"/>-->
+    <!--</type>-->
 </config>
