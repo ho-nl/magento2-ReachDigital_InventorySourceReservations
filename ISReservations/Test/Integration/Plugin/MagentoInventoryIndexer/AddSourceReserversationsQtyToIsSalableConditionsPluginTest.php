@@ -129,9 +129,9 @@ class AddSourceReserversationsQtyToIsSalableConditionsPluginTest extends TestCas
         return [
             // source_qty, reserved_qty, min_qty, backorders, managed,  expected_is_salable, expected_salable_qty
             [          10,            0,       0,      false,    true,                 true,                   10 ],
-            [          10,            2,       0,      false,    true,                 true,                    8 ],
-            [          10,            5,       0,      false,    true,                 true,                    5 ],
-            [          10,           10,       0,      false,    true,                false,                    0 ],
+            [          10,           -2,       0,      false,    true,                 true,                    8 ],
+            [          10,           -5,       0,      false,    true,                 true,                    5 ],
+            [          10,          -10,       0,      false,    true,                false,                    0 ],
             // @todo add more cases to test
         ];
     }
