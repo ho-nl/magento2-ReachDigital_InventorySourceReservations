@@ -55,10 +55,11 @@ class AddSourceReserversationsQtyToIsSalableConditionsPlugin
         $connection = $this->resourceConnection->getConnection();
         $sourceItemTable = $this->resourceConnection->getTableName(SourceItemResourceModel::TABLE_NAME_SOURCE_ITEM);
 
+        // @todo Modify MinQtyStockCondition similarly
         $quantityExpression = (string)$this->resourceConnection->getConnection()->getCheckSql(
             'source_item.' . SourceItemInterface::STATUS . ' = ' . SourceItemInterface::STATUS_OUT_OF_STOCK,
             0,
-            'source_item' . SourceItemInterface::QUANTITY
+            'source_item.' . SourceItemInterface::QUANTITY . ' + reservation.quantity'
         );
         $sourceCodes = $this->getSourceCodes($stockId);
 
@@ -71,6 +72,10 @@ class AddSourceReserversationsQtyToIsSalableConditionsPlugin
             ['legacy_stock_item' => $this->resourceConnection->getTableName('cataloginventory_stock_item')],
             'product.entity_id = legacy_stock_item.product_id',
             []
+        )->joinLeft(
+            ['reservation' => $this->resourceConnection->getTableName('inventory_source_reservation')],
+            'reservation.sku = source_item.sku AND reservation.source_code = source_item.source_code',
+            []
         );
 
         $select->from(
@@ -82,7 +87,7 @@ class AddSourceReserversationsQtyToIsSalableConditionsPlugin
             ]
         )
             ->where('source_item.' . SourceItemInterface::SOURCE_CODE . ' IN (?)', $sourceCodes)
-            ->group(['source_item' . SourceItemInterface::SKU]);
+            ->group(['source_item.' . SourceItemInterface::SKU]);
 
         return $select;
     }
