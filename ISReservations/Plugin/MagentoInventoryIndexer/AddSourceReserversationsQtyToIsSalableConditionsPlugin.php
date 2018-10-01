@@ -49,13 +49,16 @@ class AddSourceReserversationsQtyToIsSalableConditionsPlugin
      */
     public function aroundExecute(SelectBuilder $subject, Closure $proceed, int $stockId): Select
     {
+        // This replaces SelectBuilder:execute(), instead of adding our join to the resulting $select, as original
+        // method uses ambiguous column names that break the query once we join the source reservations table.
+
         $connection = $this->resourceConnection->getConnection();
         $sourceItemTable = $this->resourceConnection->getTableName(SourceItemResourceModel::TABLE_NAME_SOURCE_ITEM);
 
         $quantityExpression = (string)$this->resourceConnection->getConnection()->getCheckSql(
             'source_item.' . SourceItemInterface::STATUS . ' = ' . SourceItemInterface::STATUS_OUT_OF_STOCK,
             0,
-            SourceItemInterface::QUANTITY
+            'source_item' . SourceItemInterface::QUANTITY
         );
         $sourceCodes = $this->getSourceCodes($stockId);
 
@@ -79,7 +82,7 @@ class AddSourceReserversationsQtyToIsSalableConditionsPlugin
             ]
         )
             ->where('source_item.' . SourceItemInterface::SOURCE_CODE . ' IN (?)', $sourceCodes)
-            ->group([SourceItemInterface::SKU]);
+            ->group(['source_item' . SourceItemInterface::SKU]);
 
         return $select;
     }
