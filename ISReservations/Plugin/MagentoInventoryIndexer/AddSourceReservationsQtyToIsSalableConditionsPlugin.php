@@ -58,7 +58,7 @@ class AddSourceReservationsQtyToIsSalableConditionsPlugin
         $quantityExpression = (string)$this->resourceConnection->getConnection()->getCheckSql(
             'source_item.' . SourceItemInterface::STATUS . ' = ' . SourceItemInterface::STATUS_OUT_OF_STOCK,
             0,
-            'source_item.' . SourceItemInterface::QUANTITY . ' + reservation.quantity'
+            'source_item.' . SourceItemInterface::QUANTITY . ' + IF(reservation.quantity IS NOT NULL, reservation.quantity, 0)'
         );
         $sourceCodes = $this->getSourceCodes($stockId);
 
