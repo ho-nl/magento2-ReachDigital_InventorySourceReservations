@@ -63,8 +63,9 @@ class GetReservationsQuantityTest extends TestCase
      */
     public function should_add_the_reservation_to_the_stock_amount(string $sourceCode, string $sku, float $quantity)
     {
+        $initialQty = $this->getReservationQuantity->execute($sku, $sourceCode);
         $this->appendReservation($sourceCode, $sku, $quantity, 'test');
-        $this->assertEquals($quantity, $this->getReservationQuantity->execute($sku, $sourceCode));
+        $this->assertEquals($initialQty + $quantity, $this->getReservationQuantity->execute($sku, $sourceCode));
         $this->appendReservation($sourceCode, $sku, $quantity * -1, 'test');
     }
 
