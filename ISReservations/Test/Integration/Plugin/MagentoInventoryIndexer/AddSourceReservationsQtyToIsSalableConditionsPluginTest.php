@@ -137,7 +137,7 @@ class AddSourceReservationsQtyToIsSalableConditionsPluginTest extends TestCase
             [          10,             1,           -2,       0,      false,    true,                    1,                    8 ],
             [          10,             1,           -5,       0,      false,    true,                    1,                    5 ],
             [          10,             1,          -10,       0,      false,    true,                    0,                    0 ],
-            [          10,             1,          -10,      -1,      false,    true,                    1,                    0 ],
+            [          10,             1,          -10,      -1,      true,     true,                    1,                    0 ],
         ];
     }
 
