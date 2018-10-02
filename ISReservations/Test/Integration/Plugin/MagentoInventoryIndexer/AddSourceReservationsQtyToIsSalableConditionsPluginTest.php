@@ -78,18 +78,23 @@ class AddSourceReservationsQtyToIsSalableConditionsPluginTest extends TestCase
      * @magentoDataFixture ../../../../vendor/magento/module-inventory-api/Test/_files/stock_source_links.php
      *
      * @param float $sourceQty
+     * @param int   $sourceStatus
      * @param float $reservedQty
      * @param float $minQty
      * @param bool  $backorders
      * @param bool  $managed
-     * @param bool  $expectedIsSalable
+     * @param int   $expectedIsSalable
      * @param int   $expectedSalableQty
      *
+     * @throws \Magento\Framework\Exception\CouldNotSaveException
+     * @throws \Magento\Framework\Exception\InputException
      * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws \Magento\Framework\Validation\ValidationException
      * @throws \Magento\InventoryConfigurationApi\Exception\SkuIsNotAssignedToStockException
      */
     public function testAddSourceReservationsQtyToIsSalableConditions(
         float $sourceQty,
+        int   $sourceStatus,
         float $reservedQty,
         float $minQty,
         bool  $backorders,
@@ -98,10 +103,10 @@ class AddSourceReservationsQtyToIsSalableConditionsPluginTest extends TestCase
         int   $expectedSalableQty
     ): void
     {
-        // Set source qty. Clear qty for the other sources
-        $this->setSourceQtyBySkuAndSourceCode($sourceQty, 'SKU-1', 'eu-1');
-        $this->setSourceQtyBySkuAndSourceCode(0,          'SKU-1', 'eu-2');
-        $this->setSourceQtyBySkuAndSourceCode(0,          'SKU-1', 'eu-3');
+        // Set source qty for eu-1 that we are testing with. Clear qty/status for the other sources
+        $this->setSourceQtyBySkuAndSourceCode($sourceQty, $sourceStatus, 'SKU-1', 'eu-1');
+        $this->setSourceQtyBySkuAndSourceCode(         0,             0, 'SKU-1', 'eu-2');
+        $this->setSourceQtyBySkuAndSourceCode(         0,             0, 'SKU-1', 'eu-3');
 
         // Append reservation
         $this->appendReservation('eu-1', 'SKU-1', $reservedQty, 'testAddSourceReservationsQtyToIsSalableConditions');
@@ -127,17 +132,18 @@ class AddSourceReservationsQtyToIsSalableConditionsPluginTest extends TestCase
     public function isSalableTestDataProvider(): array
     {
         return [
-            // source_qty, reserved_qty, min_qty, backorders, managed,  expected_is_salable, expected_salable_qty
-            [          10,            0,       0,      false,    true,                 1,                   10 ],
-            [          10,           -2,       0,      false,    true,                 1,                    8 ],
-            [          10,           -5,       0,      false,    true,                 1,                    5 ],
-            [          10,          -10,       0,      false,    true,                 0,                    0 ],
-            // @todo add more cases to test
+            // source_qty, source_status, reserved_qty, min_qty, backorders, managed,  expected_is_salable, expected_salable_qty
+            [          10,             1,            0,       0,      false,    true,                    1,                   10 ],
+            [          10,             1,           -2,       0,      false,    true,                    1,                    8 ],
+            [          10,             1,           -5,       0,      false,    true,                    1,                    5 ],
+            [          10,             1,          -10,       0,      false,    true,                    0,                    0 ],
+            [          10,             1,          -10,      -1,      false,    true,                    1,                    0 ],
         ];
     }
 
     /**
      * @param float  $qty
+     * @param int    $status
      * @param string $sku
      * @param string $sourceCode
      *
@@ -145,7 +151,7 @@ class AddSourceReservationsQtyToIsSalableConditionsPluginTest extends TestCase
      * @throws \Magento\Framework\Exception\InputException
      * @throws \Magento\Framework\Validation\ValidationException
      */
-    public function setSourceQtyBySkuAndSourceCode(float $qty, string $sku, string $sourceCode): void
+    public function setSourceQtyBySkuAndSourceCode(float $qty, int $status, string $sku, string $sourceCode): void
     {
         $searchCriteria = $this->searchCriteriaBuilder
             ->addFilter(SourceItemInterface::SKU, $sku)
@@ -156,6 +162,7 @@ class AddSourceReservationsQtyToIsSalableConditionsPluginTest extends TestCase
         // Assuming SKU always exists
         $item = array_pop($items);
 
+        $item->setStatus($status);
         $item->setQuantity($qty);
         $this->sourceItemSave->execute([$item]);
     }
