@@ -16,7 +16,7 @@ use PHPUnit\Framework\TestCase;
 use ReachDigital\ISReservations\Model\AppendReservations;
 use ReachDigital\ISReservations\Model\ReservationBuilder;
 
-class AddSourceReserversationsQtyToIsSalableConditionsPluginTest extends TestCase
+class AddSourceReservationsQtyToIsSalableConditionsPluginTest extends TestCase
 {
     /** @var IndexDataBySkuListProvider */
     private $indexDataBySkuListProvider;
@@ -58,7 +58,7 @@ class AddSourceReserversationsQtyToIsSalableConditionsPluginTest extends TestCas
      * Test that given various stock item configurations, reseveration qty, and actual source stock level,
      * IndexDataBySkuListProvider provides correct index data.
      *
-     * @covers             \ReachDigital\ISReservations\Plugin\MagentoInventoryIndexer\AddSourceReserversationsQtyToIsSalableConditionsPlugin
+     * @covers             \ReachDigital\ISReservations\Plugin\MagentoInventoryIndexer\AddSourceReservationsQtyToIsSalableConditionsPlugin
      * @dataProvider       isSalableTestDataProvider
      * @magentoDbIsolation disabled
      *
@@ -88,7 +88,7 @@ class AddSourceReserversationsQtyToIsSalableConditionsPluginTest extends TestCas
      * @throws \Magento\Framework\Exception\LocalizedException
      * @throws \Magento\InventoryConfigurationApi\Exception\SkuIsNotAssignedToStockException
      */
-    public function testAddSourceReserversationsQtyToIsSalableConditions(
+    public function testAddSourceReservationsQtyToIsSalableConditions(
         float $sourceQty,
         float $reservedQty,
         float $minQty,
@@ -104,7 +104,7 @@ class AddSourceReserversationsQtyToIsSalableConditionsPluginTest extends TestCas
         $this->setSourceQtyBySkuAndSourceCode(0,          'SKU-1', 'eu-3');
 
         // Append reservation
-        $this->appendReservation('eu-1', 'SKU-1', $reservedQty, 'testAddSourceReserversationsQtyToIsSalableConditions');
+        $this->appendReservation('eu-1', 'SKU-1', $reservedQty, 'testAddSourceReservationsQtyToIsSalableConditions');
 
         // Set stock item config
         $stockItemConfiguration = $this->getStockItemConfiguration->execute('SKU-1', 30);
@@ -121,7 +121,7 @@ class AddSourceReserversationsQtyToIsSalableConditionsPluginTest extends TestCas
         $this->assertEquals($expectedSalableQty, $indexData['quantity']);
 
         // Revert reservation
-        $this->appendReservation('eu-1', 'SKU-1', -$reservedQty, 'testAddSourceReserversationsQtyToIsSalableConditions');
+        $this->appendReservation('eu-1', 'SKU-1', -$reservedQty, 'testAddSourceReservationsQtyToIsSalableConditions');
     }
 
     public function isSalableTestDataProvider(): array

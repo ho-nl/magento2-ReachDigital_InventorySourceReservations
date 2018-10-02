@@ -19,7 +19,7 @@ use Magento\Inventory\Model\ResourceModel\StockSourceLink as StockSourceLinkReso
 use Magento\Inventory\Model\StockSourceLink;
 use Magento\InventoryApi\Api\Data\SourceInterface;
 
-class AddSourceReserversationsQtyToIsSalableConditionsPlugin
+class AddSourceReservationsQtyToIsSalableConditionsPlugin
 {
     /** @var ResourceConnection */
     private $resourceConnection;

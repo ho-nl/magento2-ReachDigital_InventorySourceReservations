@@ -19,11 +19,11 @@
 
 
     <type name="Magento\InventoryIndexer\Indexer\SelectBuilder">
-        <plugin name="add_source_reserversation_qty_to_stock_indexer"
-                type="ReachDigital\ISReservations\Plugin\MagentoInventoryIndexer\AddSourceReserversationsQtyToIsSalableConditionsPlugin"/>
+        <plugin name="add_source_reservation_qty_to_stock_indexer"
+                type="ReachDigital\ISReservations\Plugin\MagentoInventoryIndexer\AddSourceReservationsQtyToIsSalableConditionsPlugin"/>
     </type>
 
-    <type name="ReachDigital\ISReservations\Plugin\MagentoInventoryIndexer\AddSourceReserversationsQtyToIsSalableConditionsPlugin">
+    <type name="ReachDigital\ISReservations\Plugin\MagentoInventoryIndexer\AddSourceReservationsQtyToIsSalableConditionsPlugin">
         <arguments>
             <argument name="productTableName" xsi:type="string">catalog_product_entity</argument>
         </arguments>
@@ -31,11 +31,11 @@
 
     <type name="Magento\InventorySales\Model\ResourceModel\IsStockItemSalableCondition\MinQtyStockCondition">
         <plugin name="add_source_reservation_qty_to_stock_indexer_min_qty"
-                type="ReachDigital\ISReservations\Plugin\MagentoInventorySales\AddSourceReserversationsQtyToIsSalableMinQtyStockConditionPlugin"/>
+                type="ReachDigital\ISReservations\Plugin\MagentoInventorySales\AddSourceReservationsQtyToIsSalableMinQtyStockConditionPlugin"/>
     </type>
 
     <type name="\Magento\InventorySales\Model\ResourceModel\IsStockItemSalableCondition\BackordersCondition">
         <plugin name="add_source_reservation_qty_to_stock_indexer_backorders"
-                type="ReachDigital\ISReservations\Plugin\MagentoInventorySales\AddSourceReserversationsQtyToIsSalableBackordersConditionPlugin"/>
+                type="ReachDigital\ISReservations\Plugin\MagentoInventorySales\AddSourceReservationsQtyToIsSalableBackordersConditionPlugin"/>
     </type>
 </config>
