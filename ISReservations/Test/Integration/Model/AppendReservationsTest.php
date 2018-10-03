@@ -46,14 +46,14 @@ class AppendReservationsTest extends TestCase
      * @test
      * @covers \ReachDigital\ISReservations\Model\AppendReservations
      *
-     * @magentoDataFixtured ../../../../vendor/reach-digital/magento2-order-source-reservations/IOSReservations/Test/Integration/_files/order_simple_product_with_custom_options_rollback.php
-     * @magentoDataFixtured ../../../../vendor/magento/module-inventory-indexer/Test/_files/reindex_inventory_rollback.php
-     * @magentoDataFixtured ../../../../vendor/reach-digital/magento2-order-source-reservations/IOSReservations/Test/Integration/_files/product_simple_with_custom_options_rollback.php
-     * @magentoDataFixtured ../../../../vendor/magento/module-inventory-sales-api/Test/_files/websites_with_stores_rollback.php
-     * @magentoDataFixtured ../../../../vendor/magento/module-inventory-api/Test/_files/stock_source_links_rollback.php
-     * @magentoDataFixtured ../../../../vendor/magento/module-inventory-api/Test/_files/stocks_rollback.php
-     * @magentoDataFixtured ../../../../vendor/magento/module-inventory-api/Test/_files/sources_rollback.php
-     * @magentoDataFixtured ../../../../vendor/reach-digital/magento2-inventory-source-reservations/ISReservations/Test/Integration/_files/clean_all_reservations.php
+     * @magentoDataFixture ../../../../vendor/reach-digital/magento2-order-source-reservations/IOSReservations/Test/Integration/_files/order_simple_product_with_custom_options_rollback.php
+     * @magentoDataFixture ../../../../vendor/magento/module-inventory-indexer/Test/_files/reindex_inventory_rollback.php
+     * @magentoDataFixture ../../../../vendor/reach-digital/magento2-order-source-reservations/IOSReservations/Test/Integration/_files/product_simple_with_custom_options_rollback.php
+     * @magentoDataFixture ../../../../vendor/magento/module-inventory-sales-api/Test/_files/websites_with_stores_rollback.php
+     * @magentoDataFixture ../../../../vendor/magento/module-inventory-api/Test/_files/stock_source_links_rollback.php
+     * @magentoDataFixture ../../../../vendor/magento/module-inventory-api/Test/_files/stocks_rollback.php
+     * @magentoDataFixture ../../../../vendor/magento/module-inventory-api/Test/_files/sources_rollback.php
+     * @magentoDataFixture ../../../../vendor/reach-digital/magento2-inventory-source-reservations/ISReservations/Test/Integration/_files/clean_all_reservations.php
      *
      * @magentoDataFixture ../../../../vendor/magento/module-inventory-api/Test/_files/products.php
      * @magentoDataFixture ../../../../vendor/magento/module-inventory-api/Test/_files/sources.php
@@ -79,17 +79,19 @@ class AppendReservationsTest extends TestCase
 
         // Append some reservations to different sources, indexed stock quantity is not affected by disabled sources
         $this->appendReservation('eu-1', 'SKU-1', -3, 'test_index_trigger');
+        $this->appendReservation('eu-1', 'SKU-1', -6, 'test_index_trigger');
         $this->appendReservation('eu-2', 'SKU-1', -3, 'test_index_trigger');
         $this->appendReservation('eu-disabled', 'SKU-1', -3, 'test_index_trigger');
 
         // Check indexed quantity. Must have decreased by 6.
         $newStockData = $this->getStockItemData->execute('SKU-1', 30);
 
-        self::assertEquals($origStockData['quantity'] - 6, $newStockData['quantity'], 'Asserting that new indexed quantity has decreased');
+        self::assertEquals($origStockData['quantity'] - 12, $newStockData['quantity'], 'Asserting that new indexed quantity has decreased');
 
-        // Append some reservations to different sources, indexed stock quantity is not affected by disabled sources
+        // Revert reservations
         $this->appendReservation('eu-1', 'SKU-1', 3, 'test_index_trigger_rollback');
         $this->appendReservation('eu-2', 'SKU-1', 3, 'test_index_trigger_rollback');
+        $this->appendReservation('eu-2', 'SKU-1', 6, 'test_index_trigger_rollback');
         $this->appendReservation('eu-disabled', 'SKU-1', 3, 'test_index_trigger_rollback');
     }
 

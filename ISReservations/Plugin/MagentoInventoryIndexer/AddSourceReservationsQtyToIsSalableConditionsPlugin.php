@@ -54,13 +54,16 @@ class AddSourceReservationsQtyToIsSalableConditionsPlugin
 
         $connection = $this->resourceConnection->getConnection();
         $sourceItemTable = $this->resourceConnection->getTableName(SourceItemResourceModel::TABLE_NAME_SOURCE_ITEM);
+        $sourceReservationTable = $this->resourceConnection->getTableName('inventory_source_reservation');
 
-        $quantityExpression = (string)$this->resourceConnection->getConnection()->getCheckSql(
+        $quantityExpression = (string) $connection->getCheckSql(
             'source_item.' . SourceItemInterface::STATUS . ' = ' . SourceItemInterface::STATUS_OUT_OF_STOCK,
             0,
-            'source_item.' . SourceItemInterface::QUANTITY . ' + IF(reservation.quantity IS NOT NULL, reservation.quantity, 0)'
+            'source_item.' . SourceItemInterface::QUANTITY . ' + IF(res_sum.aggregate_quantity IS NOT NULL, res_sum.aggregate_quantity, 0)'
         );
         $sourceCodes = $this->getSourceCodes($stockId);
+
+        $sourceCodesExpression = $connection->quoteInto(' IN (?)', $sourceCodes);
 
         $select = $connection->select();
         $select->joinLeft(
@@ -72,8 +75,10 @@ class AddSourceReservationsQtyToIsSalableConditionsPlugin
             'product.entity_id = legacy_stock_item.product_id',
             []
         )->joinLeft(
-            ['reservation' => $this->resourceConnection->getTableName('inventory_source_reservation')],
-            'reservation.sku = source_item.sku AND reservation.source_code = source_item.source_code',
+            # Aggregrate before join for better performance, see https://stackoverflow.com/questions/27622398/multiple-array-agg-calls-in-a-single-query/27626358#
+            # Must pass as Zend_Db_Expr object to prevent incorrect quoting
+            ['res_sum' => new \Zend_Db_Expr('(SELECT res.*, SUM(res.quantity) as aggregate_quantity FROM '.$sourceReservationTable.' AS res WHERE res.source_code '.$sourceCodesExpression.' GROUP BY res.source_code, res.sku)') ],
+            'res_sum.sku = source_item.sku AND res_sum.source_code = source_item.source_code',
             []
         );
 

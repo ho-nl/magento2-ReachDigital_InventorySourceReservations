@@ -43,7 +43,7 @@ class AddSourceReservationsQtyToIsSalableMinQtyStockConditionPlugin
         $quantityExpression = (string)$this->resourceConnection->getConnection()->getCheckSql(
             'source_item.' . SourceItemInterface::STATUS . ' = ' . SourceItemInterface::STATUS_OUT_OF_STOCK,
             0,
-            'source_item.'. SourceItemInterface::QUANTITY . ' + IF(reservation.quantity IS NOT NULL, reservation.quantity, 0)'
+            'source_item.'. SourceItemInterface::QUANTITY . ' + IF(res_sum.aggregate_quantity IS NOT NULL, res_sum.aggregate_quantity, 0)'
         );
         $quantityExpression = 'SUM(' . $quantityExpression . ')';
 
