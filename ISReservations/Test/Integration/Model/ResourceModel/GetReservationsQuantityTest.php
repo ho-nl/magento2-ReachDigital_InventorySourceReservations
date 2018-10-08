@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 use ReachDigital\ISReservations\Model\AppendReservations;
 use ReachDigital\ISReservations\Model\ReservationBuilder;
 use ReachDigital\ISReservations\Model\ResourceModel\CleanupReservations;
-use ReachDigital\ISReservations\Model\ResourceModel\GetReservationsQuantity;
+use ReachDigital\ISReservations\Model\ResourceModel\GetSourceReservationsQuantity;
 
 class GetReservationsQuantityTest extends TestCase
 {
@@ -20,7 +20,7 @@ class GetReservationsQuantityTest extends TestCase
     /** @var CleanupReservations */
     private $cleanupReservations;
 
-    /** @var GetReservationsQuantity */
+    /** @var GetSourceReservationsQuantity */
     private $getReservationQuantity;
 
     /** @var ReservationBuilder */
@@ -31,7 +31,7 @@ class GetReservationsQuantityTest extends TestCase
         $this->reservationBuilder = Bootstrap::getObjectManager()->get(ReservationBuilder::class);
         $this->appendReservations = Bootstrap::getObjectManager()->get(AppendReservations::class);
         $this->cleanupReservations = Bootstrap::getObjectManager()->get(CleanupReservations::class);
-        $this->getReservationQuantity = Bootstrap::getObjectManager()->get(GetReservationsQuantity::class);
+        $this->getReservationQuantity = Bootstrap::getObjectManager()->get(GetSourceReservationsQuantity::class);
     }
 
     /**
@@ -45,7 +45,7 @@ class GetReservationsQuantityTest extends TestCase
 
     /**
      * @test
-     * @covers \ReachDigital\ISReservations\Model\ResourceModel\GetReservationsQuantity
+     * @covers \ReachDigital\ISReservations\Model\ResourceModel\GetSourceReservationsQuantity
      *
      * @magentoDataFixture ../../../../vendor/magento/module-inventory-api/Test/_files/products.php
      * @magentoDataFixture ../../../../vendor/magento/module-inventory-api/Test/_files/sources.php

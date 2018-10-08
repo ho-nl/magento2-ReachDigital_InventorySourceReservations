@@ -12,13 +12,13 @@ namespace ReachDigital\ISReservationsApi\Model;
  *
  * @api
  */
-interface GetReservationsQuantityInterface
+interface GetSourceReservationsQuantityInterface
 {
     /**
      * Given a product sku and a stock id, return reservation quantity
      *
      * @param string $sku
-     * @param int $sourceCode
+     * @param string $sourceCode
      * @return float
      */
     public function execute(string $sku, string $sourceCode): float;

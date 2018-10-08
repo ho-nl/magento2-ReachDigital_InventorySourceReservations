@@ -10,7 +10,7 @@
     <preference for="ReachDigital\ISReservationsApi\Model\ReservationInterface" type="ReachDigital\ISReservations\Model\Reservation"/>
     <preference for="ReachDigital\ISReservationsApi\Model\ReservationBuilderInterface" type="ReachDigital\ISReservations\Model\ReservationBuilder"/>
     <preference for="ReachDigital\ISReservationsApi\Model\CleanupReservationsInterface" type="ReachDigital\ISReservations\Model\ResourceModel\CleanupReservations"/>
-    <preference for="ReachDigital\ISReservationsApi\Model\GetReservationsQuantityInterface" type="ReachDigital\ISReservations\Model\ResourceModel\GetReservationsQuantity"/>
+    <preference for="ReachDigital\ISReservationsApi\Model\GetSourceReservationsQuantityInterface" type="ReachDigital\ISReservations\Model\ResourceModel\GetSourceReservationsQuantity"/>
     <type name="ReachDigital\ISReservations\Model\ResourceModel\CleanupReservations">
         <arguments>
             <argument name="groupConcatMaxLen" xsi:type="number">2000</argument>

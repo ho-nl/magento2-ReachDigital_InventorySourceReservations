@@ -9,12 +9,12 @@ namespace ReachDigital\ISReservations\Model\ResourceModel;
 
 use Magento\Framework\App\ResourceConnection;
 use ReachDigital\ISReservationsApi\Model\ReservationInterface;
-use ReachDigital\ISReservationsApi\Model\GetReservationsQuantityInterface;
+use ReachDigital\ISReservationsApi\Model\GetSourceReservationsQuantityInterface;
 
 /**
  * @inheritdoc
  */
-class GetReservationsQuantity implements GetReservationsQuantityInterface
+class GetSourceReservationsQuantity implements GetSourceReservationsQuantityInterface
 {
     /**
      * @var ResourceConnection
