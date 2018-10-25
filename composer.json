@@ -13,11 +13,13 @@
     "autoload": {
         "files": [
             "ISReservations/registration.php",
-            "ISReservationsApi/registration.php"
+            "ISReservationsApi/registration.php",
+            "ISReservationsAdminUI/registration.php"
         ],
         "psr-4": {
             "ReachDigital\\ISReservations\\": "ISReservations",
-            "ReachDigital\\ISReservationsApi\\": "ISReservationsApi"
+            "ReachDigital\\ISReservationsApi\\": "ISReservationsApi",
+            "ReachDigital\\ISReservationsAdminUI\\": "ISReservationsAdminUI"
         }
     }
 }
