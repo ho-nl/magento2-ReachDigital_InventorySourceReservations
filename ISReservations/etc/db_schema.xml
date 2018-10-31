@@ -14,15 +14,15 @@
         <column xsi:type="decimal" name="quantity" scale="4" precision="10" unsigned="false" nullable="false"
                 default="0"/>
         <column xsi:type="varchar" name="metadata" nullable="true" length="255"/>
-        <constraint xsi:type="primary" name="PRIMARY">
+        <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="reservation_id"/>
         </constraint>
-        <index name="INVENTORY_SOURCE_RESERVATION_CODE_SKU_QUANTITY" indexType="btree">
+        <index referenceId="INVENTORY_SOURCE_RESERVATION_CODE_SKU_QUANTITY" indexType="btree">
             <column name="source_code"/>
             <column name="sku"/>
             <column name="quantity"/>
         </index>
-        <index name="INVENTORY_SOURCE_RESERVATION_METADATA" indexType="btree">
+        <index referenceId="INVENTORY_SOURCE_RESERVATION_METADATA" indexType="btree">
             <column name="metadata"/>
         </index>
     </table>
