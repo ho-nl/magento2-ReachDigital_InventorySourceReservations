@@ -70,7 +70,7 @@ class ReservationBuilderTest extends TestCase
     {
         $reservationData = [
             ReservationInterface::RESERVATION_ID => null,
-            ReservationInterface::SOURCE_CODE => 1,
+            ReservationInterface::SOURCE_CODE => '1',
             ReservationInterface::SKU => 'somesku',
             ReservationInterface::QUANTITY => 11,
             ReservationInterface::METADATA => 'some meta data',
@@ -155,11 +155,11 @@ class ReservationBuilderTest extends TestCase
                 ['method' => 'setQuantity', 'argument' => 11]
             ],
             'with_missing_sku' => [
-                ['method' => 'setSourceId', 'argument' => 1],
+                ['method' => 'setSourceCode', 'argument' => '1'],
                 ['method' => 'setQuantity', 'argument' => 11],
             ],
             'with_missing_qty' => [
-                ['method' => 'setSourceId', 'argument' => 1],
+                ['method' => 'setSourceCode', 'argument' => '1'],
                 ['method' => 'setSku', 'argument' => 'somesku'],
             ],
         ];
