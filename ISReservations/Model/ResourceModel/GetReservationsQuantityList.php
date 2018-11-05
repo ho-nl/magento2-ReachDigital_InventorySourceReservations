@@ -10,19 +10,23 @@ use ReachDigital\ISReservationsApi\Model\ReservationInterface;
 
 class GetReservationsQuantityList
 {
-
     /**
      * @var ResourceConnection
      */
     private $resourceConnection;
 
-    public function __construct(
-      ResourceConnection $resourceConnection
-    ) {
+    public function __construct(ResourceConnection $resourceConnection)
+    {
         $this->resourceConnection = $resourceConnection;
     }
 
-    public function execute($sourceCodes, array $skuList = []): \Traversable
+    /**
+     * @param array $skuList
+     * @param array $sourceCodes
+     *
+     * @return \Traversable
+     */
+    public function execute(array $skuList, array $sourceCodes = null): \Traversable
     {
         $connection = $this->resourceConnection->getConnection();
         $reservationTable = $this->resourceConnection->getTableName('inventory_source_reservation');
@@ -32,11 +36,11 @@ class GetReservationsQuantityList
                 ReservationInterface::SKU,
                 ReservationInterface::QUANTITY => 'SUM(' . ReservationInterface::QUANTITY . ')'
             ])
-            ->where(ReservationInterface::SOURCE_CODE . ' IN(?)', $sourceCodes)
+            ->where(ReservationInterface::SKU . ' IN(?)', $skuList)
             ->group(ReservationInterface::SKU);
 
-        if ($skuList) {
-            $select->where(ReservationInterface::SKU . ' IN(?)', $skuList);
+        if ($sourceCodes) {
+            $select->where(ReservationInterface::SOURCE_CODE . ' IN(?)', $sourceCodes);
         }
 
         return new \ArrayIterator($connection->fetchAssoc($select) ?: []);
