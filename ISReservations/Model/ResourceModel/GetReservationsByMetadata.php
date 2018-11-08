@@ -33,6 +33,12 @@ class GetReservationsByMetadata
     }
 
     /**
+     *
+     * @fixme This interface makes it too easy to write buggy code, i.e. execute("order:{$orderId}") which would match
+     * any order whose ID happens to start with $orderId.
+     *
+     * @deprecated
+     *
      * @param string $startsWith
      *
      * @return Reservation[]
