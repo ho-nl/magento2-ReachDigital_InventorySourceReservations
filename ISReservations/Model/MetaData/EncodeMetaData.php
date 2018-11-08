@@ -9,13 +9,25 @@ namespace ReachDigital\ISReservations\Model\MetaData;
 
 class EncodeMetaData
 {
-
     /**
      * @param array $data
      *
-     * @throws \Exception
+     * @return string
+     * @throws \InvalidArgumentException
      */
-    public function execute(array $data) {
-        throw new \Exception('not yet implemented');
+    public function execute(array $data): string
+    {
+        $pieces = [];
+        foreach ($data as $key => $value) {
+            if ($value === null) {
+                $pieces[] = $key;
+            } else {
+                if (!\in_array(gettype($value), ['boolean','integer','double','string'])) {
+                    throw new \InvalidArgumentException('Only strings and scalar types suported');
+                }
+                $pieces[] = "$key:$value";
+            }
+        }
+        return implode(',', $pieces);
     }
 }
