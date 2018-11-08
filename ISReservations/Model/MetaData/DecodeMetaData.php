@@ -14,8 +14,8 @@ class DecodeMetaData
         $lineItems = explode(',', $metaData);
         $values = [];
         foreach ($lineItems as $lineItem) {
-            [$key, $value] = explode(':', $lineItem);
-            $values[$key] = $value;
+            [$key, $value] = explode('(', $lineItem);
+            $values[$key] = rtrim($value, ')');
         }
         return $values;
     }

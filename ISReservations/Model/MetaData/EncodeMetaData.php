@@ -25,7 +25,7 @@ class EncodeMetaData
                 if (!\in_array(gettype($value), ['boolean','integer','double','string'])) {
                     throw new \InvalidArgumentException('Only strings and scalar types suported');
                 }
-                $pieces[] = "$key:$value";
+                $pieces[] = "$key($value)";
             }
         }
         return implode(',', $pieces);
