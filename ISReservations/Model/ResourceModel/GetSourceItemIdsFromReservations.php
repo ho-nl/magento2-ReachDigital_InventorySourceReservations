@@ -8,8 +8,8 @@ namespace ReachDigital\ISReservations\Model\ResourceModel;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Inventory\Model\ResourceModel\SourceItem;
 use Magento\InventoryApi\Api\Data\SourceItemInterface;
-use ReachDigital\ISReservations\Model\Reservation;
-use ReachDigital\ISReservationsApi\Model\ReservationInterface;
+use ReachDigital\ISReservations\Model\SourceReservation;
+use ReachDigital\ISReservationsApi\Model\SourceReservationInterface;
 
 class GetSourceItemIdsFromReservations
 {
@@ -44,10 +44,10 @@ class GetSourceItemIdsFromReservations
 
         // Build condition based on sku/source_code, since we can't rely on having reservation IDs to do a join with
         $whereParts = [];
-        /** @var Reservation $reservation */
+        /** @var SourceReservation $reservation */
         foreach ($reservations as $reservation) {
-            $skuEquals = $connection->prepareSqlCondition('si.'.ReservationInterface::SKU, [ 'eq' => $reservation->getSku() ]);
-            $sourceCodeEquals = $connection->prepareSqlCondition('si.'.ReservationInterface::SOURCE_CODE, [ 'eq' => $reservation->getSourceCode() ]);
+            $skuEquals = $connection->prepareSqlCondition('si.'.SourceReservationInterface::SKU, ['eq' => $reservation->getSku() ]);
+            $sourceCodeEquals = $connection->prepareSqlCondition('si.'.SourceReservationInterface::SOURCE_CODE, ['eq' => $reservation->getSourceCode() ]);
             $whereParts[] = "($skuEquals AND $sourceCodeEquals)";
         }
         $whereCondition = '(' . implode(' OR ', $whereParts) . ')';

@@ -13,8 +13,8 @@ use Magento\InventoryConfiguration\Model\SaveStockItemConfiguration;
 use Magento\InventoryIndexer\Indexer\SourceItem\IndexDataBySkuListProvider;
 use Magento\TestFramework\Helper\Bootstrap;
 use PHPUnit\Framework\TestCase;
-use ReachDigital\ISReservations\Model\AppendReservations;
-use ReachDigital\ISReservations\Model\ReservationBuilder;
+use ReachDigital\ISReservations\Model\AppendSourceReservations;
+use ReachDigital\ISReservations\Model\SourceReservationBuilder;
 
 class AddSourceReservationsQtyToIsSalableConditionsPluginTest extends TestCase
 {
@@ -27,7 +27,7 @@ class AddSourceReservationsQtyToIsSalableConditionsPluginTest extends TestCase
     /** @var SaveStockItemConfiguration */
     private $saveStockItemConfiguration;
 
-    /** @var AppendReservations */
+    /** @var AppendSourceReservations */
     private $appendSourceReservation;
 
     /** @var SourceItemRepositoryInterface */
@@ -39,7 +39,7 @@ class AddSourceReservationsQtyToIsSalableConditionsPluginTest extends TestCase
     /** @var SourceItemsSaveInterface */
     private $sourceItemSave;
 
-    /** @var ReservationBuilder */
+    /** @var SourceReservationBuilder */
     private $reservationBuilder;
 
     protected function setUp()
@@ -47,11 +47,11 @@ class AddSourceReservationsQtyToIsSalableConditionsPluginTest extends TestCase
         $this->indexDataBySkuListProvider = Bootstrap::getObjectManager()->get(IndexDataBySkuListProvider::class);
         $this->getStockItemConfiguration = Bootstrap::getObjectManager()->get(GetStockItemConfiguration::class);
         $this->saveStockItemConfiguration = Bootstrap::getObjectManager()->get(SaveStockItemConfiguration::class);
-        $this->appendSourceReservation = Bootstrap::getObjectManager()->get(AppendReservations::class);
+        $this->appendSourceReservation = Bootstrap::getObjectManager()->get(AppendSourceReservations::class);
         $this->sourceItemRepository = Bootstrap::getObjectManager()->get(SourceItemRepositoryInterface::class);
         $this->sourceItemSave = Bootstrap::getObjectManager()->get(SourceItemsSaveInterface::class);
         $this->searchCriteriaBuilder = Bootstrap::getObjectManager()->get(SearchCriteriaBuilder::class);
-        $this->reservationBuilder = Bootstrap::getObjectManager()->get(ReservationBuilder::class);
+        $this->reservationBuilder = Bootstrap::getObjectManager()->get(SourceReservationBuilder::class);
     }
 
     /**

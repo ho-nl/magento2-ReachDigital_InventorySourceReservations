@@ -13,9 +13,9 @@ use Magento\Framework\Validation\ValidationException;
  * Used to build ReservationInterface objects
  *
  * @api
- * @see ReservationInterface
+ * @see SourceReservationInterface
  */
-interface ReservationBuilderInterface
+interface SourceReservationBuilderInterface
 {
     public function setSourceCode(string $sourceCode): self;
 
@@ -26,8 +26,8 @@ interface ReservationBuilderInterface
     public function setMetadata(string $metadata = null): self;
 
     /**
-     * @return ReservationInterface
+     * @return SourceReservationInterface
      * @throws ValidationException
      */
-    public function build(): ReservationInterface;
+    public function build(): SourceReservationInterface;
 }

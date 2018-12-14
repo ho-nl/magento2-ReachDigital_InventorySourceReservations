@@ -8,7 +8,7 @@ declare(strict_types=1);
 namespace ReachDigital\ISReservations\Model\ResourceModel;
 
 use Magento\Framework\App\ResourceConnection;
-use ReachDigital\ISReservationsApi\Model\ReservationInterface;
+use ReachDigital\ISReservationsApi\Model\SourceReservationInterface;
 use ReachDigital\ISReservationsApi\Model\GetSourceReservationsQuantityInterface;
 
 /**
@@ -39,9 +39,9 @@ class GetSourceReservationsQuantity implements GetSourceReservationsQuantityInte
         $reservationTable = $this->resource->getTableName('inventory_source_reservation');
 
         $select = $connection->select()
-            ->from($reservationTable, [ReservationInterface::QUANTITY => 'SUM(' . ReservationInterface::QUANTITY . ')'])
-            ->where(ReservationInterface::SKU . ' = ?', $sku)
-            ->where(ReservationInterface::SOURCE_CODE . ' = ?', $sourceCode)
+            ->from($reservationTable, [SourceReservationInterface::QUANTITY => 'SUM(' . SourceReservationInterface::QUANTITY . ')'])
+            ->where(SourceReservationInterface::SKU . ' = ?', $sku)
+            ->where(SourceReservationInterface::SOURCE_CODE . ' = ?', $sourceCode)
             ->limit(1);
 
         return (float) $connection->fetchOne($select) ?: (float) 0;

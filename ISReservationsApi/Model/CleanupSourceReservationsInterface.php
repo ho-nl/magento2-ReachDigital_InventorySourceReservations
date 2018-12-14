@@ -13,7 +13,7 @@ namespace ReachDigital\ISReservationsApi\Model;
  *
  * @api
  */
-interface CleanupReservationsInterface
+interface CleanupSourceReservationsInterface
 {
     /**
      * Clean reservation table to prevent overloading.

@@ -6,12 +6,12 @@
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <preference for="ReachDigital\ISReservationsApi\Model\AppendReservationsInterface" type="ReachDigital\ISReservations\Model\AppendReservations"/>
-    <preference for="ReachDigital\ISReservationsApi\Model\ReservationInterface" type="ReachDigital\ISReservations\Model\Reservation"/>
-    <preference for="ReachDigital\ISReservationsApi\Model\ReservationBuilderInterface" type="ReachDigital\ISReservations\Model\ReservationBuilder"/>
-    <preference for="ReachDigital\ISReservationsApi\Model\CleanupReservationsInterface" type="ReachDigital\ISReservations\Model\ResourceModel\CleanupReservations"/>
+    <preference for="ReachDigital\ISReservationsApi\Model\AppendSourceReservationsInterface" type="ReachDigital\ISReservations\Model\AppendSourceReservations"/>
+    <preference for="ReachDigital\ISReservationsApi\Model\SourceReservationInterface" type="ReachDigital\ISReservations\Model\SourceReservation"/>
+    <preference for="ReachDigital\ISReservationsApi\Model\SourceReservationBuilderInterface" type="ReachDigital\ISReservations\Model\SourceReservationBuilder"/>
+    <preference for="ReachDigital\ISReservationsApi\Model\CleanupSourceReservationsInterface" type="ReachDigital\ISReservations\Model\ResourceModel\CleanupSourceReservations"/>
     <preference for="ReachDigital\ISReservationsApi\Model\GetSourceReservationsQuantityInterface" type="ReachDigital\ISReservations\Model\ResourceModel\GetSourceReservationsQuantity"/>
-    <type name="ReachDigital\ISReservations\Model\ResourceModel\CleanupReservations">
+    <type name="ReachDigital\ISReservations\Model\ResourceModel\CleanupSourceReservations">
         <arguments>
             <argument name="groupConcatMaxLen" xsi:type="number">2000</argument>
         </arguments>

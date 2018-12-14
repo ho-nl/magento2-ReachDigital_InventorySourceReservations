@@ -12,9 +12,9 @@ use Magento\InventoryApi\Api\SourceItemRepositoryInterface;
 use Magento\Setup\Exception;
 use Magento\TestFramework\Helper\Bootstrap;
 use PHPUnit\Framework\TestCase;
-use ReachDigital\ISReservations\Model\AppendReservations;
-use ReachDigital\ISReservations\Model\ReservationBuilder;
-use ReachDigital\ISReservationsApi\Model\ReservationInterface;
+use ReachDigital\ISReservations\Model\AppendSourceReservations;
+use ReachDigital\ISReservations\Model\SourceReservationBuilder;
+use ReachDigital\ISReservationsApi\Model\SourceReservationInterface;
 
 class GetSourceItemIdsFromReservationsTest extends TestCase
 {
@@ -27,10 +27,10 @@ class GetSourceItemIdsFromReservationsTest extends TestCase
     /** @var SearchCriteriaBuilder */
     private $searchCriteriaBuilder;
 
-    /** @var AppendReservations */
+    /** @var AppendSourceReservations */
     private $appendReservations;
 
-    /** @var ReservationBuilder */
+    /** @var SourceReservationBuilder */
     private $reservationBuilder;
 
     /** @var GetSourceItemIdsFromReservations */
@@ -41,8 +41,8 @@ class GetSourceItemIdsFromReservationsTest extends TestCase
         $this->getReservationQuantity = Bootstrap::getObjectManager()->get(GetSourceItemIdsFromReservations::class);
         $this->sourceItemRepository = Bootstrap::getObjectManager()->get(SourceItemRepositoryInterface::class);
         $this->searchCriteriaBuilder = Bootstrap::getObjectManager()->get(SearchCriteriaBuilder::class);
-        $this->appendReservations = Bootstrap::getObjectManager()->get(AppendReservations::class);
-        $this->reservationBuilder = Bootstrap::getObjectManager()->get(ReservationBuilder::class);
+        $this->appendReservations = Bootstrap::getObjectManager()->get(AppendSourceReservations::class);
+        $this->reservationBuilder = Bootstrap::getObjectManager()->get(SourceReservationBuilder::class);
         $this->getSourceItemByReservations = Bootstrap::getObjectManager()->get(GetSourceItemIdsFromReservations::class);
     }
 
@@ -93,7 +93,7 @@ class GetSourceItemIdsFromReservationsTest extends TestCase
      * @throws \Magento\Framework\Exception\InputException
      * @throws \Magento\Framework\Validation\ValidationException
      */
-    private function appendReservation(string $sourceCode, string $sku, float $quantity, string $metaData): ReservationInterface
+    private function appendReservation(string $sourceCode, string $sku, float $quantity, string $metaData): SourceReservationInterface
     {
         $this->reservationBuilder->setSourceCode($sourceCode);
         $this->reservationBuilder->setQuantity($quantity);

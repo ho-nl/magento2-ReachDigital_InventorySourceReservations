@@ -7,8 +7,8 @@ declare(strict_types=1);
 namespace ReachDigital\ISReservations\Model\ResourceModel;
 
 use Magento\Framework\App\ResourceConnection;
-use ReachDigital\ISReservations\Model\Reservation;
-use ReachDigital\ISReservationsApi\Model\ReservationInterface;
+use ReachDigital\ISReservations\Model\SourceReservation;
+use ReachDigital\ISReservationsApi\Model\SourceReservationInterface;
 use ReachDigital\ISReservationsApi\Model\ReservationInterfaceFactory;
 
 class GetReservationsByMetadata
@@ -35,7 +35,7 @@ class GetReservationsByMetadata
     /**
      * @param string $startsWith
      *
-     * @return Reservation[]
+     * @return SourceReservation[]
      * @throws \DomainException
      */
     public function execute(string $startsWith) : array
@@ -45,21 +45,21 @@ class GetReservationsByMetadata
 
         $select = $connection->select()
             ->from($reservationTable, [
-                ReservationInterface::RESERVATION_ID,
-                ReservationInterface::SOURCE_CODE,
-                ReservationInterface::SKU,
-                ReservationInterface::QUANTITY,
-                ReservationInterface::METADATA
+                SourceReservationInterface::RESERVATION_ID,
+                SourceReservationInterface::SOURCE_CODE,
+                SourceReservationInterface::SKU,
+                SourceReservationInterface::QUANTITY,
+                SourceReservationInterface::METADATA
             ])
-            ->where(ReservationInterface::METADATA . ' LIKE ?', "{$startsWith}%");
+            ->where(SourceReservationInterface::METADATA . ' LIKE ?', "{$startsWith}%");
 
-        return array_map(function($row) : ReservationInterface {
+        return array_map(function($row) : SourceReservationInterface {
             return $this->reservationFactory->create([
-                'reservationId' => (int) $row[ReservationInterface::RESERVATION_ID],
-                'sourceCode' => (string) $row[ReservationInterface::SOURCE_CODE],
-                'sku' => (string) $row[ReservationInterface::SKU],
-                'quantity' => (float) $row[ReservationInterface::QUANTITY],
-                'metadata' => (string) $row[ReservationInterface::METADATA]
+                'reservationId' => (int)$row[SourceReservationInterface::RESERVATION_ID],
+                'sourceCode' => (string)$row[SourceReservationInterface::SOURCE_CODE],
+                'sku' => (string)$row[SourceReservationInterface::SKU],
+                'quantity' => (float)$row[SourceReservationInterface::QUANTITY],
+                'metadata' => (string)$row[SourceReservationInterface::METADATA]
             ]);
         }, $connection->fetchAssoc($select));
     }

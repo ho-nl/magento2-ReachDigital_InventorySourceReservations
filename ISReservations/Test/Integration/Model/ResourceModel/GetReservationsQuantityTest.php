@@ -7,30 +7,30 @@ namespace ReachDigital\ISReservations\Test\Integration\Model\ResourceModel;
 
 use Magento\TestFramework\Helper\Bootstrap;
 use PHPUnit\Framework\TestCase;
-use ReachDigital\ISReservations\Model\AppendReservations;
-use ReachDigital\ISReservations\Model\ReservationBuilder;
-use ReachDigital\ISReservations\Model\ResourceModel\CleanupReservations;
+use ReachDigital\ISReservations\Model\AppendSourceReservations;
+use ReachDigital\ISReservations\Model\SourceReservationBuilder;
+use ReachDigital\ISReservations\Model\ResourceModel\CleanupSourceReservations;
 use ReachDigital\ISReservations\Model\ResourceModel\GetSourceReservationsQuantity;
 
 class GetReservationsQuantityTest extends TestCase
 {
-    /** @var AppendReservations */
+    /** @var AppendSourceReservations */
     private $appendReservations;
 
-    /** @var CleanupReservations */
+    /** @var CleanupSourceReservations */
     private $cleanupReservations;
 
     /** @var GetSourceReservationsQuantity */
     private $getReservationQuantity;
 
-    /** @var ReservationBuilder */
+    /** @var SourceReservationBuilder */
     private $reservationBuilder;
 
     public function setUp()
     {
-        $this->reservationBuilder = Bootstrap::getObjectManager()->get(ReservationBuilder::class);
-        $this->appendReservations = Bootstrap::getObjectManager()->get(AppendReservations::class);
-        $this->cleanupReservations = Bootstrap::getObjectManager()->get(CleanupReservations::class);
+        $this->reservationBuilder = Bootstrap::getObjectManager()->get(SourceReservationBuilder::class);
+        $this->appendReservations = Bootstrap::getObjectManager()->get(AppendSourceReservations::class);
+        $this->cleanupReservations = Bootstrap::getObjectManager()->get(CleanupSourceReservations::class);
         $this->getReservationQuantity = Bootstrap::getObjectManager()->get(GetSourceReservationsQuantity::class);
     }
 

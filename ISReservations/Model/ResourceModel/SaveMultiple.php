@@ -8,7 +8,7 @@ declare(strict_types=1);
 namespace ReachDigital\ISReservations\Model\ResourceModel;
 
 use Magento\Framework\App\ResourceConnection;
-use ReachDigital\ISReservationsApi\Model\ReservationInterface;
+use ReachDigital\ISReservationsApi\Model\SourceReservationInterface;
 
 /**
  * Implementation of Reservation save multiple operation for specific db layer
@@ -31,7 +31,8 @@ class SaveMultiple
     }
 
     /**
-     * @param ReservationInterface[] $reservations
+     * @param SourceReservationInterface[] $reservations
+     *
      * @return void
      */
     public function execute(array $reservations)
@@ -40,14 +41,14 @@ class SaveMultiple
         $tableName = $this->resourceConnection->getTableName('inventory_source_reservation');
 
         $columns = [
-            ReservationInterface::SOURCE_CODE,
-            ReservationInterface::SKU,
-            ReservationInterface::QUANTITY,
-            ReservationInterface::METADATA,
+            SourceReservationInterface::SOURCE_CODE,
+            SourceReservationInterface::SKU,
+            SourceReservationInterface::QUANTITY,
+            SourceReservationInterface::METADATA,
         ];
 
         $data = [];
-        /** @var ReservationInterface $reservation */
+        /** @var SourceReservationInterface $reservation */
         foreach ($reservations as $reservation) {
             $data[] = [
                 $reservation->getSourceCode(),

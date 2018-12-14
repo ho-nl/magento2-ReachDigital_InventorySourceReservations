@@ -18,12 +18,12 @@ namespace ReachDigital\ISReservationsApi\Model;
  *
  * @api
  */
-interface AppendReservationsInterface
+interface AppendSourceReservationsInterface
 {
     /**
      * Append reservations
      *
-     * @param ReservationInterface[] $reservations
+     * @param SourceReservationInterface[] $reservations
      * @return void
      * @throws \Magento\Framework\Exception\InputException
      * @throws \Magento\Framework\Exception\CouldNotSaveException

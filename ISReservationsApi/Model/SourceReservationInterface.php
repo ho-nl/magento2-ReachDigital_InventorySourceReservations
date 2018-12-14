@@ -15,7 +15,7 @@ namespace ReachDigital\ISReservationsApi\Model;
  *
  * @api
  */
-interface ReservationInterface
+interface SourceReservationInterface
 {
     /**
      * Constants for keys of data array. Identical to the name of the getter in snake case

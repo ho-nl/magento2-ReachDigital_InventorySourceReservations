@@ -11,31 +11,31 @@ use Magento\InventoryIndexer\Model\ResourceModel\GetStockItemData;
 use Magento\InventoryIndexer\Test\Integration\Indexer\RemoveIndexData;
 use Magento\TestFramework\Helper\Bootstrap;
 use PHPUnit\Framework\TestCase;
-use ReachDigital\ISReservations\Model\AppendReservations;
-use ReachDigital\ISReservations\Model\ReservationBuilder;
-use ReachDigital\ISReservations\Model\ResourceModel\CleanupReservations;
+use ReachDigital\ISReservations\Model\AppendSourceReservations;
+use ReachDigital\ISReservations\Model\SourceReservationBuilder;
+use ReachDigital\ISReservations\Model\ResourceModel\CleanupSourceReservations;
 
 class AppendReservationsTest extends TestCase
 {
     /** @var GetStockItemData */
     private $getStockItemData;
 
-    /** @var AppendReservations */
+    /** @var AppendSourceReservations */
     private $appendReservations;
 
-    /** @var ReservationBuilder */
+    /** @var SourceReservationBuilder */
     private $reservationBuilder;
 
-    /** @var CleanupReservations */
+    /** @var CleanupSourceReservations */
     private $cleanupReservations;
 
     protected function setUp()
     {
         $this->getStockItemData = Bootstrap::getObjectManager()->get(GetStockItemData::class);
-        $this->appendReservations = Bootstrap::getObjectManager()->get(AppendReservations::class);
-        $this->reservationBuilder = Bootstrap::getObjectManager()->get(ReservationBuilder::class);
+        $this->appendReservations = Bootstrap::getObjectManager()->get(AppendSourceReservations::class);
+        $this->reservationBuilder = Bootstrap::getObjectManager()->get(SourceReservationBuilder::class);
         $this->removeIndexData = Bootstrap::getObjectManager()->get(RemoveIndexData::class);
-        $this->cleanupReservations = Bootstrap::getObjectManager()->get(CleanupReservations::class);
+        $this->cleanupReservations = Bootstrap::getObjectManager()->get(CleanupSourceReservations::class);
     }
 
     protected function tearDown()
@@ -44,7 +44,7 @@ class AppendReservationsTest extends TestCase
 
     /**
      * @test
-     * @covers \ReachDigital\ISReservations\Model\AppendReservations
+     * @covers \ReachDigital\ISReservations\Model\AppendSourceReservations
      *
      * @magentoDataFixture ../../../../vendor/reach-digital/magento2-order-source-reservations/IOSReservations/Test/Integration/_files/order_simple_product_with_custom_options_rollback.php
      * @magentoDataFixture ../../../../vendor/magento/module-inventory-indexer/Test/_files/reindex_inventory_rollback.php

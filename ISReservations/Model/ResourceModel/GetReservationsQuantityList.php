@@ -6,7 +6,7 @@
 namespace ReachDigital\ISReservations\Model\ResourceModel;
 
 use Magento\Framework\App\ResourceConnection;
-use ReachDigital\ISReservationsApi\Model\ReservationInterface;
+use ReachDigital\ISReservationsApi\Model\SourceReservationInterface;
 
 class GetReservationsQuantityList
 {
@@ -33,14 +33,14 @@ class GetReservationsQuantityList
 
         $select = $connection->select()
             ->from($reservationTable, [
-                ReservationInterface::SKU,
-                ReservationInterface::QUANTITY => 'SUM(' . ReservationInterface::QUANTITY . ')'
+                SourceReservationInterface::SKU,
+                SourceReservationInterface::QUANTITY => 'SUM(' . SourceReservationInterface::QUANTITY . ')'
             ])
-            ->where(ReservationInterface::SKU . ' IN(?)', $skuList)
-            ->group(ReservationInterface::SKU);
+            ->where(SourceReservationInterface::SKU . ' IN(?)', $skuList)
+            ->group(SourceReservationInterface::SKU);
 
         if ($sourceCodes) {
-            $select->where(ReservationInterface::SOURCE_CODE . ' IN(?)', $sourceCodes);
+            $select->where(SourceReservationInterface::SOURCE_CODE . ' IN(?)', $sourceCodes);
         }
 
         return new \ArrayIterator($connection->fetchAssoc($select) ?: []);

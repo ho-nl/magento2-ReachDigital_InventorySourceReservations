@@ -12,14 +12,14 @@ use Magento\Framework\Exception\InputException;
 use Magento\InventoryIndexer\Indexer\SourceItem\SourceItemIndexer;
 use ReachDigital\ISReservations\Model\ResourceModel\GetSourceItemIdsFromReservations;
 use ReachDigital\ISReservations\Model\ResourceModel\SaveMultiple;
-use ReachDigital\ISReservationsApi\Model\ReservationInterface;
-use ReachDigital\ISReservationsApi\Model\AppendReservationsInterface;
+use ReachDigital\ISReservationsApi\Model\SourceReservationInterface;
+use ReachDigital\ISReservationsApi\Model\AppendSourceReservationsInterface;
 use Psr\Log\LoggerInterface;
 
 /**
  * @inheritdoc
  */
-class AppendReservations implements AppendReservationsInterface
+class AppendSourceReservations implements AppendSourceReservationsInterface
 {
     /**
      * @var SaveMultiple
@@ -68,7 +68,7 @@ class AppendReservations implements AppendReservationsInterface
             throw new InputException(__('Input data is empty'));
         }
 
-        /** @var ReservationInterface $reservation */
+        /** @var SourceReservationInterface $reservation */
         foreach ($reservations as $reservation) {
             if (null !== $reservation->getReservationId()) {
                 $message =  __(

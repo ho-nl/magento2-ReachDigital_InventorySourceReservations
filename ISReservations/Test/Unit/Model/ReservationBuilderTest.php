@@ -10,10 +10,10 @@ namespace ReachDigital\ISReservations\Test\Unit\Model;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\Framework\Validation\ValidationResult;
 use Magento\Framework\Validation\ValidationResultFactory;
-use ReachDigital\ISReservations\Model\ReservationBuilder;
+use ReachDigital\ISReservations\Model\SourceReservationBuilder;
 use ReachDigital\ISReservations\Model\SnakeToCamelCaseConverter;
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
-use ReachDigital\ISReservationsApi\Model\ReservationInterface;
+use ReachDigital\ISReservationsApi\Model\SourceReservationInterface;
 use PHPUnit\Framework\TestCase;
 
 class ReservationBuilderTest extends TestCase
@@ -24,7 +24,7 @@ class ReservationBuilderTest extends TestCase
     private $objectManager;
 
     /**
-     * @var ReservationInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var SourceReservationInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     private $reservation;
 
@@ -42,7 +42,7 @@ class ReservationBuilderTest extends TestCase
     private $validationResultFactory;
 
     /**
-     * @var ReservationBuilder
+     * @var SourceReservationBuilder
      */
     private $reservationBuilder;
 
@@ -50,14 +50,14 @@ class ReservationBuilderTest extends TestCase
     {
         $this->objectManager = $this->getMockBuilder(ObjectManagerInterface::class)->getMock();
         $this->snakeToCamelCaseConverter = $this->getMockBuilder(SnakeToCamelCaseConverter::class)->getMock();
-        $this->reservation = $this->getMockBuilder(ReservationInterface::class)->getMock();
+        $this->reservation = $this->getMockBuilder(SourceReservationInterface::class)->getMock();
         $this->validationResult = $this->getMockBuilder(ValidationResult::class)
             ->disableOriginalConstructor()
             ->getMock();
         $this->validationResultFactory = $this->getMockBuilder(ValidationResultFactory::class)->getMock();
 
         $this->reservationBuilder = (new ObjectManager($this))->getObject(
-            ReservationBuilder::class,
+            SourceReservationBuilder::class,
             [
                 'objectManager' => $this->objectManager,
                 'snakeToCamelCaseConverter' => $this->snakeToCamelCaseConverter,
@@ -69,11 +69,11 @@ class ReservationBuilderTest extends TestCase
     public function testBuild()
     {
         $reservationData = [
-            ReservationInterface::RESERVATION_ID => null,
-            ReservationInterface::SOURCE_CODE => '1',
-            ReservationInterface::SKU => 'somesku',
-            ReservationInterface::QUANTITY => 11,
-            ReservationInterface::METADATA => 'some meta data',
+            SourceReservationInterface::RESERVATION_ID => null,
+            SourceReservationInterface::SOURCE_CODE => '1',
+            SourceReservationInterface::SKU => 'somesku',
+            SourceReservationInterface::QUANTITY => 11,
+            SourceReservationInterface::METADATA => 'some meta data',
         ];
 
         $reservationMappedData = [
@@ -93,7 +93,7 @@ class ReservationBuilderTest extends TestCase
         $this->objectManager
             ->expects($this->once())
             ->method('create')
-            ->with(ReservationInterface::class, $reservationMappedData)
+            ->with(SourceReservationInterface::class, $reservationMappedData)
             ->willReturn($this->reservation);
 
         $this->validationResultFactory
@@ -106,10 +106,10 @@ class ReservationBuilderTest extends TestCase
             ->method('isValid')
             ->willReturn(true);
 
-        $this->reservationBuilder->setSourceCode($reservationData[ReservationInterface::SOURCE_CODE]);
-        $this->reservationBuilder->setSku($reservationData[ReservationInterface::SKU]);
-        $this->reservationBuilder->setQuantity($reservationData[ReservationInterface::QUANTITY]);
-        $this->reservationBuilder->setMetadata($reservationData[ReservationInterface::METADATA]);
+        $this->reservationBuilder->setSourceCode($reservationData[SourceReservationInterface::SOURCE_CODE]);
+        $this->reservationBuilder->setSku($reservationData[SourceReservationInterface::SKU]);
+        $this->reservationBuilder->setQuantity($reservationData[SourceReservationInterface::QUANTITY]);
+        $this->reservationBuilder->setMetadata($reservationData[SourceReservationInterface::METADATA]);
 
         self::assertEquals($this->reservation, $this->reservationBuilder->build());
     }

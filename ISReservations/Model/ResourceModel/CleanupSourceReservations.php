@@ -8,13 +8,13 @@ declare(strict_types=1);
 namespace ReachDigital\ISReservations\Model\ResourceModel;
 
 use Magento\Framework\App\ResourceConnection;
-use ReachDigital\ISReservationsApi\Model\ReservationInterface;
-use ReachDigital\ISReservationsApi\Model\CleanupReservationsInterface;
+use ReachDigital\ISReservationsApi\Model\SourceReservationInterface;
+use ReachDigital\ISReservationsApi\Model\CleanupSourceReservationsInterface;
 
 /**
  * @inheritdoc
  */
-class CleanupReservations implements CleanupReservationsInterface
+class CleanupSourceReservations implements CleanupSourceReservationsInterface
 {
     /**
      * @var ResourceConnection

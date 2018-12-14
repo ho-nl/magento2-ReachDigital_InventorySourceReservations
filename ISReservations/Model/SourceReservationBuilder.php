@@ -11,13 +11,13 @@ use Magento\Framework\ObjectManagerInterface;
 use Magento\Framework\Validation\ValidationException;
 use Magento\Framework\Validation\ValidationResult;
 use Magento\Framework\Validation\ValidationResultFactory;
-use ReachDigital\ISReservationsApi\Model\ReservationInterface;
-use ReachDigital\ISReservationsApi\Model\ReservationBuilderInterface;
+use ReachDigital\ISReservationsApi\Model\SourceReservationInterface;
+use ReachDigital\ISReservationsApi\Model\SourceReservationBuilderInterface;
 
 /**
  * @inheritdoc
  */
-class ReservationBuilder implements ReservationBuilderInterface
+class SourceReservationBuilder implements SourceReservationBuilderInterface
 {
     /**
      * @var int
@@ -72,7 +72,7 @@ class ReservationBuilder implements ReservationBuilderInterface
     /**
      * @inheritdoc
      */
-    public function setSourceCode(string $sourceCode): ReservationBuilderInterface
+    public function setSourceCode(string $sourceCode): SourceReservationBuilderInterface
     {
         $this->source = $sourceCode;
         return $this;
@@ -81,7 +81,7 @@ class ReservationBuilder implements ReservationBuilderInterface
     /**
      * @inheritdoc
      */
-    public function setSku(string $sku): ReservationBuilderInterface
+    public function setSku(string $sku): SourceReservationBuilderInterface
     {
         $this->sku = $sku;
         return $this;
@@ -90,7 +90,7 @@ class ReservationBuilder implements ReservationBuilderInterface
     /**
      * @inheritdoc
      */
-    public function setQuantity(float $quantity): ReservationBuilderInterface
+    public function setQuantity(float $quantity): SourceReservationBuilderInterface
     {
         $this->quantity = $quantity;
         return $this;
@@ -99,7 +99,7 @@ class ReservationBuilder implements ReservationBuilderInterface
     /**
      * @inheritdoc
      */
-    public function setMetadata(string $metadata = null): ReservationBuilderInterface
+    public function setMetadata(string $metadata = null): SourceReservationBuilderInterface
     {
         $this->metadata = $metadata;
         return $this;
@@ -108,7 +108,7 @@ class ReservationBuilder implements ReservationBuilderInterface
     /**
      * @inheritdoc
      */
-    public function build(): ReservationInterface
+    public function build(): SourceReservationInterface
     {
         /** @var ValidationResult $validationResult */
         $validationResult = $this->validate();
@@ -117,15 +117,15 @@ class ReservationBuilder implements ReservationBuilderInterface
         }
 
         $data = [
-            ReservationInterface::RESERVATION_ID => null,
-            ReservationInterface::SOURCE_CODE => $this->source,
-            ReservationInterface::SKU => $this->sku,
-            ReservationInterface::QUANTITY => $this->quantity,
-            ReservationInterface::METADATA => $this->metadata,
+            SourceReservationInterface::RESERVATION_ID => null,
+            SourceReservationInterface::SOURCE_CODE => $this->source,
+            SourceReservationInterface::SKU => $this->sku,
+            SourceReservationInterface::QUANTITY => $this->quantity,
+            SourceReservationInterface::METADATA => $this->metadata,
         ];
 
         $arguments = $this->convertArrayKeysFromSnakeToCamelCase($data);
-        $reservation = $this->objectManager->create(ReservationInterface::class, $arguments);
+        $reservation = $this->objectManager->create(SourceReservationInterface::class, $arguments);
 
         $this->reset();
 
@@ -137,15 +137,15 @@ class ReservationBuilder implements ReservationBuilderInterface
         $errors = [];
 
         if (null === $this->source) {
-            $errors[] = __('"%field" is expected to be a number.', ['field' => ReservationInterface::SOURCE_CODE]);
+            $errors[] = __('"%field" is expected to be a number.', ['field' => SourceReservationInterface::SOURCE_CODE]);
         }
 
         if (null === $this->sku || '' === trim($this->sku)) {
-            $errors[] = __('"%field" can not be empty.', ['field' => ReservationInterface::SKU]);
+            $errors[] = __('"%field" can not be empty.', ['field' => SourceReservationInterface::SKU]);
         }
 
         if (null === $this->quantity) {
-            $errors[] = __('"%field" can not be null.', ['field' => ReservationInterface::QUANTITY]);
+            $errors[] = __('"%field" can not be null.', ['field' => SourceReservationInterface::QUANTITY]);
         }
 
         return $this->validationResultFactory->create(['errors' => $errors]);
