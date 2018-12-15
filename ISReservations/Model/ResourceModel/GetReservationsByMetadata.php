@@ -9,7 +9,7 @@ namespace ReachDigital\ISReservations\Model\ResourceModel;
 use Magento\Framework\App\ResourceConnection;
 use ReachDigital\ISReservations\Model\SourceReservation;
 use ReachDigital\ISReservationsApi\Model\SourceReservationInterface;
-use ReachDigital\ISReservationsApi\Model\ReservationInterfaceFactory;
+use ReachDigital\ISReservationsApi\Model\SourceReservationInterfaceFactory;
 
 class GetReservationsByMetadata
 {
@@ -20,16 +20,16 @@ class GetReservationsByMetadata
     private $resource;
 
     /**
-     * @var ReservationInterfaceFactory
+     * @var SourceReservationInterfaceFactory
      */
-    private $reservationFactory;
+    private $sourceReservationInterfaceFactory;
 
     public function __construct(
         ResourceConnection $resourceConnection,
-        ReservationInterfaceFactory $reservationFactory
+        SourceReservationInterfaceFactory $reservationFactory
     ) {
         $this->resource = $resourceConnection;
-        $this->reservationFactory = $reservationFactory;
+        $this->sourceReservationInterfaceFactory = $reservationFactory;
     }
 
     /**
@@ -54,7 +54,7 @@ class GetReservationsByMetadata
             ->where(SourceReservationInterface::METADATA . ' LIKE ?', "{$startsWith}%");
 
         return array_map(function($row) : SourceReservationInterface {
-            return $this->reservationFactory->create([
+            return $this->sourceReservationInterfaceFactory->create([
                 'reservationId' => (int)$row[SourceReservationInterface::RESERVATION_ID],
                 'sourceCode' => (string)$row[SourceReservationInterface::SOURCE_CODE],
                 'sku' => (string)$row[SourceReservationInterface::SKU],
