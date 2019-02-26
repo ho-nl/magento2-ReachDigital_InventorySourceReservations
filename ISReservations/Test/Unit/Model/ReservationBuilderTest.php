@@ -54,7 +54,10 @@ class ReservationBuilderTest extends TestCase
         $this->validationResult = $this->getMockBuilder(ValidationResult::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $this->validationResultFactory = $this->getMockBuilder(ValidationResultFactory::class)->getMock();
+        $this->validationResultFactory = $this->getMockBuilder(ValidationResultFactory::class)
+            ->setConstructorArgs([
+                'objectManager' => $this->createMock(\Magento\Framework\ObjectManagerInterface::class),
+            ])->getMock();
 
         $this->reservationBuilder = (new ObjectManager($this))->getObject(
             SourceReservationBuilder::class,
