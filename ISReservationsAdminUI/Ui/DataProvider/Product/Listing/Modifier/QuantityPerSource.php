@@ -6,6 +6,7 @@ declare(strict_types=1);
  */
 namespace ReachDigital\ISReservationsAdminUI\Ui\DataProvider\Product\Listing\Modifier;
 
+use Magento\Framework\App\ObjectManager;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\InventoryApi\Api\GetSourceItemsBySkuInterface;
 use Magento\InventoryApi\Api\SourceRepositoryInterface;
@@ -45,9 +46,9 @@ class QuantityPerSource extends \Magento\InventoryCatalogAdminUi\Ui\DataProvider
 
     public function __construct(
         IsSingleSourceModeInterface $isSingleSourceMode,
-        IsSourceItemManagementAllowedForProductTypeInterface $isSourceItemManagementAllowedForProductType,
+        $isSourceItemManagementAllowedForProductType,
         SourceRepositoryInterface $sourceRepository,
-        GetSourceItemsBySkuInterface $getSourceItemsBySku,
+        $getSourceItemsBySku,
         GetSourceReservationsQuantity $getSourceReservationsQuantity
     ) {
         parent::__construct(
@@ -56,10 +57,13 @@ class QuantityPerSource extends \Magento\InventoryCatalogAdminUi\Ui\DataProvider
             $sourceRepository,
             $getSourceItemsBySku
         );
+        $objectManager = ObjectManager::getInstance();
         $this->isSingleSourceMode = $isSingleSourceMode;
-        $this->isSourceItemManagementAllowedForProductType = $isSourceItemManagementAllowedForProductType;
+        $this->isSourceItemManagementAllowedForProductType = $isSourceItemManagementAllowedForProductType ?:
+            $objectManager->get(IsSourceItemManagementAllowedForProductTypeInterface::class);;
         $this->sourceRepository = $sourceRepository;
-        $this->getSourceItemsBySku = $getSourceItemsBySku;
+        $this->getSourceItemsBySku = $getSourceItemsBySku ?:
+            $objectManager->get(GetSourceItemsBySkuInterface::class);
         $this->getSourceReservationsQuantity = $getSourceReservationsQuantity;
     }
 
