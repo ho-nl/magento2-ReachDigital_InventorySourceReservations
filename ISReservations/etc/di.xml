@@ -7,7 +7,7 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <preference for="ReachDigital\ISReservationsApi\Model\AppendSourceReservationsInterface" type="ReachDigital\ISReservations\Model\AppendSourceReservations"/>
-    <preference for="ReachDigital\ISReservationsApi\Model\SourceReservationInterface" type="ReachDigital\ISReservations\Model\SourceReservation"/>
+    <preference for="ReachDigital\ISReservationsApi\Api\Data\SourceReservationInterface" type="ReachDigital\ISReservations\Model\SourceReservation"/>
     <preference for="ReachDigital\ISReservationsApi\Model\SourceReservationBuilderInterface" type="ReachDigital\ISReservations\Model\SourceReservationBuilder"/>
     <preference for="ReachDigital\ISReservationsApi\Model\CleanupSourceReservationsInterface" type="ReachDigital\ISReservations\Model\ResourceModel\CleanupSourceReservations"/>
     <preference for="ReachDigital\ISReservationsApi\Model\GetSourceReservationsQuantityInterface" type="ReachDigital\ISReservations\Model\ResourceModel\GetSourceReservationsQuantity"/>

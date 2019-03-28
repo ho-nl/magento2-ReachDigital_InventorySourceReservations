@@ -8,8 +8,8 @@ namespace ReachDigital\ISReservations\Model\ResourceModel;
 
 use Magento\Framework\App\ResourceConnection;
 use ReachDigital\ISReservations\Model\SourceReservation;
-use ReachDigital\ISReservationsApi\Model\SourceReservationInterface;
-use ReachDigital\ISReservationsApi\Model\SourceReservationInterfaceFactory;
+use ReachDigital\ISReservationsApi\Api\Data\SourceReservationInterface;
+use ReachDigital\ISReservationsApi\Api\Data\SourceReservationInterfaceFactory;
 
 class GetReservationsByMetadata
 {

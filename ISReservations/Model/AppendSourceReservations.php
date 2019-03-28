@@ -12,7 +12,7 @@ use Magento\Framework\Exception\InputException;
 use Magento\InventoryIndexer\Indexer\SourceItem\SourceItemIndexer;
 use ReachDigital\ISReservations\Model\ResourceModel\GetSourceItemIdsFromReservations;
 use ReachDigital\ISReservations\Model\ResourceModel\SaveMultiple;
-use ReachDigital\ISReservationsApi\Model\SourceReservationInterface;
+use ReachDigital\ISReservationsApi\Api\Data\SourceReservationInterface;
 use ReachDigital\ISReservationsApi\Model\AppendSourceReservationsInterface;
 use Psr\Log\LoggerInterface;
 

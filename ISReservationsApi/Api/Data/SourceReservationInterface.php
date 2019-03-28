@@ -5,7 +5,7 @@
  */
 declare(strict_types=1);
 
-namespace ReachDigital\ISReservationsApi\Model;
+namespace ReachDigital\ISReservationsApi\Api\Data;
 
 /**
  * The entity responsible for reservations, created to keep inventory amount (product quantity) up-to-date.

@@ -7,7 +7,7 @@ declare(strict_types=1);
 
 namespace ReachDigital\ISReservations\Model;
 
-use ReachDigital\ISReservationsApi\Model\SourceReservationInterface;
+use ReachDigital\ISReservationsApi\Api\Data\SourceReservationInterface;
 
 /**
  * {@inheritdoc}

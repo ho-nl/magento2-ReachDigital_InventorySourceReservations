@@ -13,7 +13,7 @@ use Magento\Framework\Validation\ValidationResultFactory;
 use ReachDigital\ISReservations\Model\SourceReservationBuilder;
 use ReachDigital\ISReservations\Model\SnakeToCamelCaseConverter;
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
-use ReachDigital\ISReservationsApi\Model\SourceReservationInterface;
+use ReachDigital\ISReservationsApi\Api\Data\SourceReservationInterface;
 use PHPUnit\Framework\TestCase;
 
 class ReservationBuilderTest extends TestCase
