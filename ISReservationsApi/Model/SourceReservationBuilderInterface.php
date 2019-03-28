@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace ReachDigital\ISReservationsApi\Model;
 
 use Magento\Framework\Validation\ValidationException;
+use ReachDigital\ISReservationsApi\Api\Data\SourceReservationInterface;
 
 /**
  * Used to build ReservationInterface objects
