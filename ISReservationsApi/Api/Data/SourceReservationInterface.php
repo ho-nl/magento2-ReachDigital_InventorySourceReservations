@@ -26,10 +26,19 @@ interface SourceReservationInterface
     public const QUANTITY = 'quantity';
     public const METADATA = 'metadata';
 
+    /**
+     * @return int|null
+     */
     public function getReservationId(): ?int;
 
+    /**
+     * @return string
+     */
     public function getSourceCode(): string;
 
+    /**
+     * @return string
+     */
     public function getSku(): string;
 
     /**
