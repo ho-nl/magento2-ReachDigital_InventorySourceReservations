@@ -62,13 +62,12 @@ class AddSourceReservationsQtyToIsSalableConditionsPluginTest extends TestCase
      * @dataProvider       isSalableTestDataProvider
      * @magentoDbIsolation disabled
      *
-     * @magentoDataFixture ../../../../vendor/reach-digital/magento2-order-source-reservations/IOSReservations/Test/Integration/_files/order_simple_product_with_custom_options_rollback.php
-     * @magentoDataFixture ../../../../vendor/magento/module-inventory-indexer/Test/_files/reindex_inventory_rollback.php
-     * @magentoDataFixture ../../../../vendor/reach-digital/magento2-order-source-reservations/IOSReservations/Test/Integration/_files/product_simple_with_custom_options_rollback.php
-     * @magentoDataFixture ../../../../vendor/magento/module-inventory-sales-api/Test/_files/websites_with_stores_rollback.php
-     * @magentoDataFixture ../../../../vendor/magento/module-inventory-api/Test/_files/stock_source_links_rollback.php
-     * @magentoDataFixture ../../../../vendor/magento/module-inventory-api/Test/_files/stocks_rollback.php
-     * @magentoDataFixture ../../../../vendor/magento/module-inventory-api/Test/_files/sources_rollback.php
+     * @-magentoDataFixture ../../../../vendor/reach-digital/magento2-order-source-reservations/IOSReservations/Test/Integration/_files/order_simple_product_with_custom_options_rollback.php
+     * @-magentoDataFixture ../../../../vendor/magento/module-inventory-indexer/Test/_files/reindex_inventory_rollback.php
+     * @-magentoDataFixture ../../../../vendor/reach-digital/magento2-order-source-reservations/IOSReservations/Test/Integration/_files/product_simple_with_custom_options_rollback.php
+     * @-magentoDataFixture ../../../../vendor/magento/module-inventory-api/Test/_files/stock_source_links_rollback.php
+     * @-magentoDataFixture ../../../../vendor/magento/module-inventory-api/Test/_files/stocks_rollback.php
+     * @-magentoDataFixture ../../../../vendor/magento/module-inventory-api/Test/_files/sources_rollback.php
      * @magentoDataFixture ../../../../vendor/reach-digital/magento2-inventory-source-reservations/ISReservations/Test/Integration/_files/clean_all_reservations.php
      *
      * @magentoDataFixture ../../../../vendor/magento/module-inventory-api/Test/_files/products.php
@@ -121,8 +120,8 @@ class AddSourceReservationsQtyToIsSalableConditionsPluginTest extends TestCase
 
         // Obtain and check indexed data
         $indexData = $this->indexDataBySkuListProvider->execute(30, ['SKU-1'])[0];
-        $this->assertEquals($expectedIsSalable, $indexData['is_salable']);
-        $this->assertEquals($expectedSalableQty, $indexData['quantity']);
+        $this->assertEquals($expectedIsSalable, $indexData['is_salable'], 'Product is salable');
+        $this->assertEquals($expectedSalableQty, $indexData['quantity'], 'Product salable qty is correct');
 
         // Revert reservation
         $this->appendReservation('eu-1', 'SKU-1', -$reservedQty, 'testAddSourceReservationsQtyToIsSalableConditions');
