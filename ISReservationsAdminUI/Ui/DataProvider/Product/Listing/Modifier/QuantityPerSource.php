@@ -17,7 +17,8 @@ use ReachDigital\ISReservations\Model\ResourceModel\GetSourceReservationsQuantit
 /**
  * Quantity Per Source modifier on CatalogInventory Product Grid
  */
-class QuantityPerSource extends \Magento\InventoryCatalogAdminUi\Ui\DataProvider\Product\Listing\Modifier\QuantityPerSource
+class QuantityPerSource extends
+    \Magento\InventoryCatalogAdminUi\Ui\DataProvider\Product\Listing\Modifier\QuantityPerSource
 {
     /**
      * @var IsSingleSourceModeInterface
@@ -59,27 +60,28 @@ class QuantityPerSource extends \Magento\InventoryCatalogAdminUi\Ui\DataProvider
         );
         $objectManager = ObjectManager::getInstance();
         $this->isSingleSourceMode = $isSingleSourceMode;
-        $this->isSourceItemManagementAllowedForProductType = $isSourceItemManagementAllowedForProductType ?:
-            $objectManager->get(IsSourceItemManagementAllowedForProductTypeInterface::class);;
+        $this->isSourceItemManagementAllowedForProductType =
+            $isSourceItemManagementAllowedForProductType ?:
+            $objectManager->get(IsSourceItemManagementAllowedForProductTypeInterface::class);
         $this->sourceRepository = $sourceRepository;
-        $this->getSourceItemsBySku = $getSourceItemsBySku ?:
-            $objectManager->get(GetSourceItemsBySkuInterface::class);
+        $this->getSourceItemsBySku = $getSourceItemsBySku ?: $objectManager->get(GetSourceItemsBySkuInterface::class);
         $this->getSourceReservationsQuantity = $getSourceReservationsQuantity;
     }
 
     /**
      * @inheritdoc
      */
-    public function modifyData(array $data) : array
+    public function modifyData(array $data): array
     {
         if (0 === $data['totalRecords'] || true === $this->isSingleSourceMode->execute()) {
             return $data;
         }
 
         foreach ($data['items'] as &$item) {
-            $item['quantity_per_source'] = $this->isSourceItemManagementAllowedForProductType->execute(
-                $item['type_id']
-            ) === true ? $this->getSourceItemsData($item['sku']) : [];
+            $item['quantity_per_source'] =
+                $this->isSourceItemManagementAllowedForProductType->execute($item['type_id']) === true
+                    ? $this->getSourceItemsData($item['sku'])
+                    : [];
         }
         unset($item);
 
@@ -98,9 +100,12 @@ class QuantityPerSource extends \Magento\InventoryCatalogAdminUi\Ui\DataProvider
         $sourceItemsData = [];
         foreach ($sourceItems as $sourceItem) {
             $source = $this->sourceRepository->get($sourceItem->getSourceCode());
-            $qty = (float)$sourceItem->getQuantity();
+            $qty = (float) $sourceItem->getQuantity();
 
-            $reservation = $this->getSourceReservationsQuantity->execute($sourceItem->getSku(), $sourceItem->getSourceCode());
+            $reservation = $this->getSourceReservationsQuantity->execute(
+                $sourceItem->getSku(),
+                $sourceItem->getSourceCode()
+            );
 
             $sourceItemsData[] = [
                 'source_name' => $source->getName(),

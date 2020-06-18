@@ -20,11 +20,8 @@ class SnakeToCamelCaseConverter
      */
     public function convert(array $elements): array
     {
-        return array_map(
-            function ($element) {
-                return lcfirst(str_replace(' ', '', ucwords(str_replace('_', ' ', strtolower($element)))));
-            },
-            $elements
-        );
+        return array_map(function ($element) {
+            return lcfirst(str_replace(' ', '', ucwords(str_replace('_', ' ', strtolower($element)))));
+        }, $elements);
     }
 }

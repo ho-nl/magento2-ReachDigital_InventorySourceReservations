@@ -18,9 +18,8 @@ class GetSourceItemIdsFromReservations
      */
     private $resourceConnection;
 
-    public function __construct(
-      ResourceConnection $resourceConnection
-    ) {
+    public function __construct(ResourceConnection $resourceConnection)
+    {
         $this->resourceConnection = $resourceConnection;
     }
 
@@ -46,14 +45,19 @@ class GetSourceItemIdsFromReservations
         $whereParts = [];
         /** @var SourceReservation $reservation */
         foreach ($reservations as $reservation) {
-            $skuEquals = $connection->prepareSqlCondition('si.'.SourceReservationInterface::SKU, ['eq' => $reservation->getSku() ]);
-            $sourceCodeEquals = $connection->prepareSqlCondition('si.'.SourceReservationInterface::SOURCE_CODE, ['eq' => $reservation->getSourceCode() ]);
+            $skuEquals = $connection->prepareSqlCondition('si.' . SourceReservationInterface::SKU, [
+                'eq' => $reservation->getSku(),
+            ]);
+            $sourceCodeEquals = $connection->prepareSqlCondition('si.' . SourceReservationInterface::SOURCE_CODE, [
+                'eq' => $reservation->getSourceCode(),
+            ]);
             $whereParts[] = "($skuEquals AND $sourceCodeEquals)";
         }
         $whereCondition = '(' . implode(' OR ', $whereParts) . ')';
 
-        $select = $connection->select()
-            ->from([ 'si' => $sourceItemTable ], [ 'si.'.SourceItem::ID_FIELD_NAME ])
+        $select = $connection
+            ->select()
+            ->from(['si' => $sourceItemTable], ['si.' . SourceItem::ID_FIELD_NAME])
             ->where($whereCondition);
 
         return array_unique($connection->fetchCol($select));

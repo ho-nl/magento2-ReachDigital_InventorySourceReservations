@@ -63,7 +63,7 @@ class AppendReservationsTest extends TestCase
      *
      * @magentoDbIsolation disabled
      *
-     * @throws 
+     * @throws
      */
     public function should_invoke_sourceitem_indexer_after_appending_source_reservation(): void
     {
@@ -86,7 +86,11 @@ class AppendReservationsTest extends TestCase
         // Check indexed quantity. Must have decreased by 6.
         $newStockData = $this->getStockItemData->execute('SKU-1', 30);
 
-        self::assertEquals($origStockData['quantity'] - 12, $newStockData['quantity'], 'Asserting that new indexed quantity has decreased');
+        self::assertEquals(
+            $origStockData['quantity'] - 12,
+            $newStockData['quantity'],
+            'Asserting that new indexed quantity has decreased'
+        );
 
         // Revert reservations
         $this->appendReservation('eu-1', 'SKU-1', 3, 'test_index_trigger_rollback');

@@ -31,10 +31,11 @@ class GetReservationsQuantityList
         $connection = $this->resourceConnection->getConnection();
         $reservationTable = $this->resourceConnection->getTableName('inventory_source_reservation');
 
-        $select = $connection->select()
+        $select = $connection
+            ->select()
             ->from($reservationTable, [
                 SourceReservationInterface::SKU,
-                SourceReservationInterface::QUANTITY => 'SUM(' . SourceReservationInterface::QUANTITY . ')'
+                SourceReservationInterface::QUANTITY => 'SUM(' . SourceReservationInterface::QUANTITY . ')',
             ])
             ->where(SourceReservationInterface::SKU . ' IN(?)', $skuList)
             ->group(SourceReservationInterface::SKU);

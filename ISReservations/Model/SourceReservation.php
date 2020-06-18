@@ -48,13 +48,8 @@ class SourceReservation implements SourceReservationInterface
      * @param float $quantity
      * @param null $metadata
      */
-    public function __construct(
-        $reservationId,
-        string $sourceCode,
-        string $sku,
-        float $quantity,
-        $metadata = null
-    ) {
+    public function __construct($reservationId, string $sourceCode, string $sku, float $quantity, $metadata = null)
+    {
         $this->reservationId = $reservationId;
         $this->sourceCode = $sourceCode;
         $this->sku = $sku;

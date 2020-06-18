@@ -57,16 +57,14 @@ class ReservationBuilderTest extends TestCase
         $this->validationResultFactory = $this->getMockBuilder(ValidationResultFactory::class)
             ->setConstructorArgs([
                 'objectManager' => $this->createMock(\Magento\Framework\ObjectManagerInterface::class),
-            ])->getMock();
+            ])
+            ->getMock();
 
-        $this->reservationBuilder = (new ObjectManager($this))->getObject(
-            SourceReservationBuilder::class,
-            [
-                'objectManager' => $this->objectManager,
-                'snakeToCamelCaseConverter' => $this->snakeToCamelCaseConverter,
-                'validationResultFactory' => $this->validationResultFactory,
-            ]
-        );
+        $this->reservationBuilder = (new ObjectManager($this))->getObject(SourceReservationBuilder::class, [
+            'objectManager' => $this->objectManager,
+            'snakeToCamelCaseConverter' => $this->snakeToCamelCaseConverter,
+            'validationResultFactory' => $this->validationResultFactory,
+        ]);
     }
 
     public function testBuild()
@@ -155,7 +153,7 @@ class ReservationBuilderTest extends TestCase
         return [
             'with_missing_source_code' => [
                 ['method' => 'setSku', 'argument' => 'somesku'],
-                ['method' => 'setQuantity', 'argument' => 11]
+                ['method' => 'setQuantity', 'argument' => 11],
             ],
             'with_missing_sku' => [
                 ['method' => 'setSourceCode', 'argument' => '1'],

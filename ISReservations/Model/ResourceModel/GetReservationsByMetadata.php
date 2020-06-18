@@ -13,7 +13,6 @@ use ReachDigital\ISReservationsApi\Api\Data\SourceReservationInterfaceFactory;
 
 class GetReservationsByMetadata
 {
-
     /**
      * @var ResourceConnection
      */
@@ -38,28 +37,29 @@ class GetReservationsByMetadata
      * @return SourceReservation[]
      * @throws \DomainException
      */
-    public function execute(string $startsWith) : array
+    public function execute(string $startsWith): array
     {
         $connection = $this->resource->getConnection();
         $reservationTable = $this->resource->getTableName('inventory_source_reservation');
 
-        $select = $connection->select()
+        $select = $connection
+            ->select()
             ->from($reservationTable, [
                 SourceReservationInterface::RESERVATION_ID,
                 SourceReservationInterface::SOURCE_CODE,
                 SourceReservationInterface::SKU,
                 SourceReservationInterface::QUANTITY,
-                SourceReservationInterface::METADATA
+                SourceReservationInterface::METADATA,
             ])
             ->where(SourceReservationInterface::METADATA . ' LIKE ?', "{$startsWith}%");
 
-        return array_map(function($row) : SourceReservationInterface {
+        return array_map(function ($row): SourceReservationInterface {
             return $this->sourceReservationInterfaceFactory->create([
-                'reservationId' => (int)$row[SourceReservationInterface::RESERVATION_ID],
-                'sourceCode' => (string)$row[SourceReservationInterface::SOURCE_CODE],
-                'sku' => (string)$row[SourceReservationInterface::SKU],
-                'quantity' => (float)$row[SourceReservationInterface::QUANTITY],
-                'metadata' => (string)$row[SourceReservationInterface::METADATA]
+                'reservationId' => (int) $row[SourceReservationInterface::RESERVATION_ID],
+                'sourceCode' => (string) $row[SourceReservationInterface::SOURCE_CODE],
+                'sku' => (string) $row[SourceReservationInterface::SKU],
+                'quantity' => (float) $row[SourceReservationInterface::QUANTITY],
+                'metadata' => (string) $row[SourceReservationInterface::METADATA],
             ]);
         }, $connection->fetchAssoc($select));
     }

@@ -24,9 +24,8 @@ class SaveMultiple
     /**
      * @param ResourceConnection $resourceConnection
      */
-    public function __construct(
-        ResourceConnection $resourceConnection
-    ) {
+    public function __construct(ResourceConnection $resourceConnection)
+    {
         $this->resourceConnection = $resourceConnection;
     }
 

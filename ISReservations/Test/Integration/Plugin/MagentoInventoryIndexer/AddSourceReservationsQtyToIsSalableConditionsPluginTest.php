@@ -94,19 +94,18 @@ class AddSourceReservationsQtyToIsSalableConditionsPluginTest extends TestCase
      */
     public function testAddSourceReservationsQtyToIsSalableConditions(
         float $sourceQty,
-        int   $sourceStatus,
+        int $sourceStatus,
         float $reservedQty,
         float $minQty,
-        bool  $backorders,
-        bool  $managed,
-        int   $expectedIsSalable,
-        int   $expectedSalableQty
-    ): void
-    {
+        bool $backorders,
+        bool $managed,
+        int $expectedIsSalable,
+        int $expectedSalableQty
+    ): void {
         // Set source qty for eu-1 that we are testing with. Clear qty/status for the other sources
         $this->setSourceQtyBySkuAndSourceCode($sourceQty, $sourceStatus, 'SKU-1', 'eu-1');
-        $this->setSourceQtyBySkuAndSourceCode(         0,             0, 'SKU-1', 'eu-2');
-        $this->setSourceQtyBySkuAndSourceCode(         0,             0, 'SKU-1', 'eu-3');
+        $this->setSourceQtyBySkuAndSourceCode(0, 0, 'SKU-1', 'eu-2');
+        $this->setSourceQtyBySkuAndSourceCode(0, 0, 'SKU-1', 'eu-3');
 
         // Append reservation
         $this->appendReservation('eu-1', 'SKU-1', $reservedQty, 'testAddSourceReservationsQtyToIsSalableConditions');
@@ -133,11 +132,11 @@ class AddSourceReservationsQtyToIsSalableConditionsPluginTest extends TestCase
     {
         return [
             // source_qty, source_status, reserved_qty, min_qty, backorders, managed,  expected_is_salable, expected_salable_qty
-            [          10,             1,            0,       0,      false,    true,                    1,                   10 ],
-            [          10,             1,           -2,       0,      false,    true,                    1,                    8 ],
-            [          10,             1,           -5,       0,      false,    true,                    1,                    5 ],
-            [          10,             1,          -10,       0,      false,    true,                    0,                    0 ],
-            [          10,             1,          -10,      -1,      true,     true,                    1,                    0 ],
+            [10, 1, 0, 0, false, true, 1, 10],
+            [10, 1, -2, 0, false, true, 1, 8],
+            [10, 1, -5, 0, false, true, 1, 5],
+            [10, 1, -10, 0, false, true, 0, 0],
+            [10, 1, -10, -1, true, true, 1, 0],
         ];
     }
 

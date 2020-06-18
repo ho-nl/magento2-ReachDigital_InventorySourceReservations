@@ -71,10 +71,9 @@ class AppendSourceReservations implements AppendSourceReservationsInterface
         /** @var SourceReservationInterface $reservation */
         foreach ($reservations as $reservation) {
             if (null !== $reservation->getReservationId()) {
-                $message =  __(
-                    'Cannot update Reservation %reservation',
-                    ['reservation' => $reservation->getReservationId()]
-                );
+                $message = __('Cannot update Reservation %reservation', [
+                    'reservation' => $reservation->getReservationId(),
+                ]);
                 $this->logger->error($message);
                 throw new InputException($message);
             }
