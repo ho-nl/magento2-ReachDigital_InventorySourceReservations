@@ -30,3 +30,11 @@ We now have an acurate stock index with all the source reservations included.
 There are other parts that dont use the indexed amount and we need to append the
 source reservation to the stock reservation:
 [GetSourceReservationsQuantityInterface](https://github.com/ho-nl/magento2-ReachDigital_InventorySourceReservations/blob/master/ISReservationsApi/Model/GetSourceReservationsQuantityInterface.php)
+
+## Commits
+
+Commits are validated with https://github.com/conventional-changelog/commitlint
+
+Gittower: Gittower doesn't properly read your PATH variable and thus commit
+validation doesn't work. Use `gittower .` to open this repo.
+
