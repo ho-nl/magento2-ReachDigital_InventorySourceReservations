@@ -40,13 +40,10 @@ class SnakeToCamelCaseConverterTest extends TestCase
     {
         return [
             'with_empty_data' => [[], []],
-            'to_lowercase' => [
-                ['one', 'Two', 'THREE'],
-                ['one', 'two', 'three']
-            ],
+            'to_lowercase' => [['one', 'Two', 'THREE'], ['one', 'two', 'three']],
             'underscore_to_camelcase' => [
                 ['my_element_one', 'My_Element_Two', 'MY_ELEMENT_THREE'],
-                ['myElementOne', 'myElementTwo', 'myElementThree']
+                ['myElementOne', 'myElementTwo', 'myElementThree'],
             ],
         ];
     }

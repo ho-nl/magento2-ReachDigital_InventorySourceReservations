@@ -42,7 +42,6 @@ class GetReservationsQuantityTest extends TestCase
         $this->cleanupReservations->execute();
     }
 
-
     /**
      * @test
      * @covers \ReachDigital\ISReservations\Model\ResourceModel\GetSourceReservationsQuantity
@@ -74,11 +73,7 @@ class GetReservationsQuantityTest extends TestCase
      */
     public function reindexRowDataProvider(): array
     {
-        return [
-            ['eu-1', 'SKU-1', 10],
-            ['eu-2', 'SKU-2', 5],
-            ['eu-2', 'SKU-2', -5],
-        ];
+        return [['eu-1', 'SKU-1', 10], ['eu-2', 'SKU-2', 5], ['eu-2', 'SKU-2', -5]];
     }
 
     private function appendReservation($sourceCode, $sku, $quantity, $metaData): void

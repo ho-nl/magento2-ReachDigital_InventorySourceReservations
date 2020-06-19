@@ -22,8 +22,8 @@ class EncodeMetaData
             if ($value === null) {
                 $pieces[] = $key;
             } else {
-                if (!\in_array(gettype($value), ['boolean','integer','double','string'])) {
-                    throw new \InvalidArgumentException('Only strings and scalar types suported');
+                if (!\in_array(gettype($value), ['boolean', 'integer', 'double', 'string'])) {
+                    throw new \InvalidArgumentException('Only strings and scalar types supported');
                 }
                 $pieces[] = "$key($value)";
             }

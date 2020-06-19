@@ -28,11 +28,12 @@ class AddSourceReservationsQtyToIsSalableBackordersConditionPlugin
 
     public function aroundExecute(BackordersCondition $subject, Closure $proceed, Select $select): string
     {
-        $globalBackorders = (int)$this->configuration->getBackorders();
+        $globalBackorders = (int) $this->configuration->getBackorders();
 
-        $condition = (1 === $globalBackorders)
-            ? 'legacy_stock_item.use_config_backorders = 1'
-            : 'legacy_stock_item.use_config_backorders = 0 AND legacy_stock_item.backorders = 1';
+        $condition =
+            1 === $globalBackorders
+                ? 'legacy_stock_item.use_config_backorders = 1'
+                : 'legacy_stock_item.use_config_backorders = 0 AND legacy_stock_item.backorders = 1';
         // @todo: figure out what to do with legacy_stock_item.qty
         $condition .= ' AND (legacy_stock_item.min_qty >= 0 OR legacy_stock_item.qty > legacy_stock_item.min_qty)';
 

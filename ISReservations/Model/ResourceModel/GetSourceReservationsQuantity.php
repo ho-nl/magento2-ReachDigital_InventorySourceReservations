@@ -24,9 +24,8 @@ class GetSourceReservationsQuantity implements GetSourceReservationsQuantityInte
     /**
      * @param ResourceConnection $resource
      */
-    public function __construct(
-        ResourceConnection $resource
-    ) {
+    public function __construct(ResourceConnection $resource)
+    {
         $this->resource = $resource;
     }
 
@@ -38,8 +37,11 @@ class GetSourceReservationsQuantity implements GetSourceReservationsQuantityInte
         $connection = $this->resource->getConnection();
         $reservationTable = $this->resource->getTableName('inventory_source_reservation');
 
-        $select = $connection->select()
-            ->from($reservationTable, [SourceReservationInterface::QUANTITY => 'SUM(' . SourceReservationInterface::QUANTITY . ')'])
+        $select = $connection
+            ->select()
+            ->from($reservationTable, [
+                SourceReservationInterface::QUANTITY => 'SUM(' . SourceReservationInterface::QUANTITY . ')',
+            ])
             ->where(SourceReservationInterface::SKU . ' = ?', $sku)
             ->where(SourceReservationInterface::SOURCE_CODE . ' = ?', $sourceCode)
             ->limit(1);

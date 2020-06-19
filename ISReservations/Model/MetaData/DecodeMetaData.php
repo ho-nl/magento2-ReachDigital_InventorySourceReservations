@@ -9,7 +9,7 @@ namespace ReachDigital\ISReservations\Model\MetaData;
 
 class DecodeMetaData
 {
-    public function execute(string $metaData) : array
+    public function execute(string $metaData): array
     {
         $lineItems = explode(',', $metaData);
         $values = [];

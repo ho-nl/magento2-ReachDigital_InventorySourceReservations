@@ -14,15 +14,13 @@ use Magento\InventoryApi\Api\Data\SourceItemInterface;
 
 class GetSourceCodesForStockIds
 {
-
     /**
      * @var ResourceConnection
      */
     private $resourceConnection;
 
-    public function __construct(
-      ResourceConnection $resourceConnection
-    ) {
+    public function __construct(ResourceConnection $resourceConnection)
+    {
         $this->resourceConnection = $resourceConnection;
     }
 
@@ -42,7 +40,8 @@ class GetSourceCodesForStockIds
             StockSourceLinkResourceModel::TABLE_NAME_STOCK_SOURCE_LINK
         );
 
-        $select = $connection->select()
+        $select = $connection
+            ->select()
             ->from(['source' => $sourceTable], [SourceInterface::SOURCE_CODE])
             ->joinInner(
                 ['stock_source_link' => $sourceStockLinkTable],

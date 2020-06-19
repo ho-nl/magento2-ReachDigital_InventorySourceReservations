@@ -43,7 +43,9 @@ class GetSourceItemIdsFromReservationsTest extends TestCase
         $this->searchCriteriaBuilder = Bootstrap::getObjectManager()->get(SearchCriteriaBuilder::class);
         $this->appendReservations = Bootstrap::getObjectManager()->get(AppendSourceReservations::class);
         $this->reservationBuilder = Bootstrap::getObjectManager()->get(SourceReservationBuilder::class);
-        $this->getSourceItemByReservations = Bootstrap::getObjectManager()->get(GetSourceItemIdsFromReservations::class);
+        $this->getSourceItemByReservations = Bootstrap::getObjectManager()->get(
+            GetSourceItemIdsFromReservations::class
+        );
     }
 
     protected function tearDown()
@@ -76,7 +78,12 @@ class GetSourceItemIdsFromReservationsTest extends TestCase
         // Make reservations on it
         /** @var SourceItem $item */
         foreach ($sourceItems as $item) {
-            $reservations[] = $this->appendReservation($item->getSourceCode(), $item->getSku(), 1, 'test_source_item_ids_from_reservations');
+            $reservations[] = $this->appendReservation(
+                $item->getSourceCode(),
+                $item->getSku(),
+                1,
+                'test_source_item_ids_from_reservations'
+            );
             $itemIds[] = $item->getId();
         }
 
@@ -93,8 +100,12 @@ class GetSourceItemIdsFromReservationsTest extends TestCase
      * @throws \Magento\Framework\Exception\InputException
      * @throws \Magento\Framework\Validation\ValidationException
      */
-    private function appendReservation(string $sourceCode, string $sku, float $quantity, string $metaData): SourceReservationInterface
-    {
+    private function appendReservation(
+        string $sourceCode,
+        string $sku,
+        float $quantity,
+        string $metaData
+    ): SourceReservationInterface {
         $this->reservationBuilder->setSourceCode($sourceCode);
         $this->reservationBuilder->setQuantity($quantity);
         $this->reservationBuilder->setSku($sku);

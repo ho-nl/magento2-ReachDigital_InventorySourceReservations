@@ -137,7 +137,9 @@ class SourceReservationBuilder implements SourceReservationBuilderInterface
         $errors = [];
 
         if (null === $this->source) {
-            $errors[] = __('"%field" is expected to be a number.', ['field' => SourceReservationInterface::SOURCE_CODE]);
+            $errors[] = __('"%field" is expected to be a number.', [
+                'field' => SourceReservationInterface::SOURCE_CODE,
+            ]);
         }
 
         if (null === $this->sku || '' === trim($this->sku)) {

@@ -28,29 +28,37 @@ class AddSourceReservationsQtyToIsSalableMinQtyStockConditionPlugin
      * @param StockConfigurationInterface $configuration
      * @param ResourceConnection $resourceConnection
      */
-    public function __construct(
-        StockConfigurationInterface $configuration,
-        ResourceConnection $resourceConnection
-    ) {
+    public function __construct(StockConfigurationInterface $configuration, ResourceConnection $resourceConnection)
+    {
         $this->configuration = $configuration;
         $this->resourceConnection = $resourceConnection;
     }
 
     public function aroundExecute(MinQtyStockCondition $subject, \Closure $proceed, Select $select): string
     {
-        $globalMinQty = (float)$this->configuration->getMinQty();
+        $globalMinQty = (float) $this->configuration->getMinQty();
 
-        $quantityExpression = (string)$this->resourceConnection->getConnection()->getCheckSql(
-            'source_item.' . SourceItemInterface::STATUS . ' = ' . SourceItemInterface::STATUS_OUT_OF_STOCK,
-            0,
-            'source_item.'. SourceItemInterface::QUANTITY . ' + IF(res_sum.aggregate_quantity IS NOT NULL, res_sum.aggregate_quantity, 0)'
-        );
+        $quantityExpression = (string) $this->resourceConnection
+            ->getConnection()
+            ->getCheckSql(
+                'source_item.' . SourceItemInterface::STATUS . ' = ' . SourceItemInterface::STATUS_OUT_OF_STOCK,
+                0,
+                'source_item.' .
+                    SourceItemInterface::QUANTITY .
+                    ' + IF(res_sum.aggregate_quantity IS NOT NULL, res_sum.aggregate_quantity, 0)'
+            );
         $quantityExpression = 'SUM(' . $quantityExpression . ')';
 
         $condition =
-            '(legacy_stock_item.use_config_min_qty = 1 AND ' . $quantityExpression . ' > ' . $globalMinQty . ')'
-            . ' OR '
-            . '(legacy_stock_item.use_config_min_qty = 0 AND ' . $quantityExpression . ' > legacy_stock_item.min_qty)';
+            '(legacy_stock_item.use_config_min_qty = 1 AND ' .
+            $quantityExpression .
+            ' > ' .
+            $globalMinQty .
+            ')' .
+            ' OR ' .
+            '(legacy_stock_item.use_config_min_qty = 0 AND ' .
+            $quantityExpression .
+            ' > legacy_stock_item.min_qty)';
 
         return $condition;
     }
