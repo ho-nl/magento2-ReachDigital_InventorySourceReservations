@@ -14,9 +14,6 @@ use Magento\Framework\Validation\ValidationResultFactory;
 use ReachDigital\ISReservationsApi\Api\Data\SourceReservationInterface;
 use ReachDigital\ISReservationsApi\Model\SourceReservationBuilderInterface;
 
-/**
- * @inheritdoc
- */
 class SourceReservationBuilder implements SourceReservationBuilderInterface
 {
     /**
@@ -69,36 +66,24 @@ class SourceReservationBuilder implements SourceReservationBuilderInterface
         $this->validationResultFactory = $validationResultFactory;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function setSourceCode(string $sourceCode): SourceReservationBuilderInterface
     {
         $this->source = $sourceCode;
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function setSku(string $sku): SourceReservationBuilderInterface
     {
         $this->sku = $sku;
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function setQuantity(float $quantity): SourceReservationBuilderInterface
     {
         $this->quantity = $quantity;
         return $this;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function setMetadata(string $metadata = null): SourceReservationBuilderInterface
     {
         $this->metadata = $metadata;
@@ -110,7 +95,6 @@ class SourceReservationBuilder implements SourceReservationBuilderInterface
      */
     public function build(): SourceReservationInterface
     {
-        /** @var ValidationResult $validationResult */
         $validationResult = $this->validate();
         if (!$validationResult->isValid()) {
             throw new ValidationException(__('Validation error'), null, 0, $validationResult);
