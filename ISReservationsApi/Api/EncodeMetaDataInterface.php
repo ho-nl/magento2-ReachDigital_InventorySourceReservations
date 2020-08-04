@@ -2,6 +2,8 @@
 
 namespace ReachDigital\ISReservationsApi\Api;
 
+use InvalidArgumentException;
+
 interface EncodeMetaDataInterface
 {
     /**

@@ -12,8 +12,8 @@
     <preference for="ReachDigital\ISReservationsApi\Model\CleanupSourceReservationsInterface" type="ReachDigital\ISReservations\Model\ResourceModel\CleanupSourceReservations"/>
     <preference for="ReachDigital\ISReservationsApi\Model\GetSourceReservationsQuantityInterface" type="ReachDigital\ISReservations\Model\ResourceModel\GetSourceReservationsQuantity"/>
 
-    <preference for="ReachDigital\ISReservationsApi\Api\EncodeMetaDataInterface" type="ReachDigital\ISReservationsApi\Api\DecodeMetaDataInterface\EncodeMetaData"/>
-    <preference for="ReachDigital\ISReservationsApi\Api\DecodeMetaDataInterface" type="ReachDigital\ISReservationsApi\Api\DecodeMetaDataInterface\DecodeMetaData"/>
+    <preference for="ReachDigital\ISReservationsApi\Api\EncodeMetaDataInterface" type="ReachDigital\ISReservations\Model\MetaData\EncodeMetaData"/>
+    <preference for="ReachDigital\ISReservationsApi\Api\DecodeMetaDataInterface" type="ReachDigital\ISReservations\Model\MetaData\DecodeMetaData"/>
     <preference for="ReachDigital\ISReservationsApi\Api\GetReservationsByMetadataInterface" type="ReachDigital\ISReservations\Model\ResourceModel\GetReservationsByMetadata"/>
     <preference for="ReachDigital\ISReservationsApi\Api\GetReservationsByMetadataListInterface" type="ReachDigital\ISReservations\Model\ResourceModel\GetReservationsByMetadataList"/>
 
