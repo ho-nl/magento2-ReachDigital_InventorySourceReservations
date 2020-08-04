@@ -6,14 +6,15 @@
 
 namespace ReachDigital\ISReservations\Test\Integration\Model;
 
+use Magento\Framework\Exception\CouldNotSaveException;
+use Magento\Framework\Exception\InputException;
+use Magento\Framework\Validation\ValidationException;
 use Magento\InventoryIndexer\Indexer\SourceItem\SourceItemIndexer;
 use Magento\InventoryIndexer\Model\ResourceModel\GetStockItemData;
-use Magento\InventoryIndexer\Test\Integration\Indexer\RemoveIndexData;
 use Magento\TestFramework\Helper\Bootstrap;
 use PHPUnit\Framework\TestCase;
 use ReachDigital\ISReservations\Model\AppendSourceReservations;
 use ReachDigital\ISReservations\Model\SourceReservationBuilder;
-use ReachDigital\ISReservations\Model\ResourceModel\CleanupSourceReservations;
 
 class AppendReservationsTest extends TestCase
 {
@@ -26,20 +27,11 @@ class AppendReservationsTest extends TestCase
     /** @var SourceReservationBuilder */
     private $reservationBuilder;
 
-    /** @var CleanupSourceReservations */
-    private $cleanupReservations;
-
     protected function setUp()
     {
         $this->getStockItemData = Bootstrap::getObjectManager()->get(GetStockItemData::class);
         $this->appendReservations = Bootstrap::getObjectManager()->get(AppendSourceReservations::class);
         $this->reservationBuilder = Bootstrap::getObjectManager()->get(SourceReservationBuilder::class);
-        $this->removeIndexData = Bootstrap::getObjectManager()->get(RemoveIndexData::class);
-        $this->cleanupReservations = Bootstrap::getObjectManager()->get(CleanupSourceReservations::class);
-    }
-
-    protected function tearDown()
-    {
     }
 
     /**
@@ -64,9 +56,9 @@ class AppendReservationsTest extends TestCase
      *
      * @throws
      */
-    public function should_invoke_sourceitem_indexer_after_appending_source_reservation(): void
+    public function should_invoke_source_item_indexer_after_appending_source_reservation(): void
     {
-        // Have some sources, stocks, skus setup.
+        // Have some sources, stocks, sku's setup.
 
         // Trigger initial reindex (else no stock index tables exist)
         /** @var SourceItemIndexer $indexer */
@@ -99,9 +91,9 @@ class AppendReservationsTest extends TestCase
     }
 
     /**
-     * @throws \Magento\Framework\Exception\CouldNotSaveException
-     * @throws \Magento\Framework\Exception\InputException
-     * @throws \Magento\Framework\Validation\ValidationException
+     * @throws CouldNotSaveException
+     * @throws InputException
+     * @throws ValidationException
      */
     private function appendReservation(string $sourceCode, string $sku, float $quantity, string $metaData): void
     {

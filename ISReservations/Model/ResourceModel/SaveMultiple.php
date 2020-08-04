@@ -47,7 +47,6 @@ class SaveMultiple
         ];
 
         $data = [];
-        /** @var SourceReservationInterface $reservation */
         foreach ($reservations as $reservation) {
             $data[] = [
                 $reservation->getSourceCode(),

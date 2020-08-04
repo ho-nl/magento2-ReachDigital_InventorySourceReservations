@@ -8,12 +8,8 @@ declare(strict_types=1);
 namespace ReachDigital\ISReservations\Model\ResourceModel;
 
 use Magento\Framework\App\ResourceConnection;
-use ReachDigital\ISReservationsApi\Api\Data\SourceReservationInterface;
 use ReachDigital\ISReservationsApi\Model\CleanupSourceReservationsInterface;
 
-/**
- * @inheritdoc
- */
 class CleanupSourceReservations implements CleanupSourceReservationsInterface
 {
     /**
@@ -44,7 +40,7 @@ class CleanupSourceReservations implements CleanupSourceReservationsInterface
         return;
 
         //      The CleanupReservations method is currently disabled, because this class removes all rows that sum to
-        //      0. We can't do that because we are interesed in certain rows of the reservation table instead of only
+        //      0. We can't do that because we are interested in certain rows of the reservation table instead of only
         //      the sum of the reservation of an item. We can consider making the group statement different and clean
         //      up reservations that way; E.g. Purchase orders that were reserved and ultimately fulfilled.
         //

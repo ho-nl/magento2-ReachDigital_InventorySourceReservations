@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace ReachDigital\ISReservations\Model;
 
+use Exception;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\InputException;
 use Magento\InventoryIndexer\Indexer\SourceItem\SourceItemIndexer;
@@ -16,9 +17,6 @@ use ReachDigital\ISReservationsApi\Api\Data\SourceReservationInterface;
 use ReachDigital\ISReservationsApi\Model\AppendSourceReservationsInterface;
 use Psr\Log\LoggerInterface;
 
-/**
- * @inheritdoc
- */
 class AppendSourceReservations implements AppendSourceReservationsInterface
 {
     /**
@@ -82,7 +80,7 @@ class AppendSourceReservations implements AppendSourceReservationsInterface
             $this->saveMultiple->execute($reservations);
             $sourceItemIds = $this->getSourceItemIdsFromReservations->execute($reservations);
             $this->sourceItemIndexer->executeList($sourceItemIds);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->logger->error($e->getMessage());
             throw new CouldNotSaveException(__('Could not append Reservation'), $e);
         }

@@ -5,8 +5,10 @@
  */
 namespace ReachDigital\ISReservations\Model\ResourceModel;
 
+use ArrayIterator;
 use Magento\Framework\App\ResourceConnection;
 use ReachDigital\ISReservationsApi\Api\Data\SourceReservationInterface;
+use Traversable;
 
 class GetReservationsQuantityList
 {
@@ -24,9 +26,9 @@ class GetReservationsQuantityList
      * @param array $skuList
      * @param array $sourceCodes
      *
-     * @return \Traversable
+     * @return Traversable
      */
-    public function execute(array $skuList, array $sourceCodes = null): \Traversable
+    public function execute(array $skuList, array $sourceCodes = null): Traversable
     {
         $connection = $this->resourceConnection->getConnection();
         $reservationTable = $this->resourceConnection->getTableName('inventory_source_reservation');
@@ -44,6 +46,6 @@ class GetReservationsQuantityList
             $select->where(SourceReservationInterface::SOURCE_CODE . ' IN(?)', $sourceCodes);
         }
 
-        return new \ArrayIterator($connection->fetchAssoc($select) ?: []);
+        return new ArrayIterator($connection->fetchAssoc($select) ?: []);
     }
 }

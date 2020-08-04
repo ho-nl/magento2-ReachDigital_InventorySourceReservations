@@ -7,13 +7,16 @@
 declare(strict_types=1);
 namespace ReachDigital\ISReservations\Model\MetaData;
 
+use InvalidArgumentException;
+use function in_array;
+
 class EncodeMetaData
 {
     /**
      * @param array $data
      *
      * @return string
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function execute(array $data): string
     {
@@ -22,8 +25,8 @@ class EncodeMetaData
             if ($value === null) {
                 $pieces[] = $key;
             } else {
-                if (!\in_array(gettype($value), ['boolean', 'integer', 'double', 'string'])) {
-                    throw new \InvalidArgumentException('Only strings and scalar types supported');
+                if (!in_array(gettype($value), ['boolean', 'integer', 'double', 'string'])) {
+                    throw new InvalidArgumentException('Only strings and scalar types supported');
                 }
                 $pieces[] = "$key($value)";
             }

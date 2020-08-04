@@ -5,6 +5,9 @@
  */
 namespace ReachDigital\ISReservations\Test\Integration\Model\ResourceModel;
 
+use Magento\Framework\Exception\CouldNotSaveException;
+use Magento\Framework\Exception\InputException;
+use Magento\Framework\Validation\ValidationException;
 use Magento\TestFramework\Helper\Bootstrap;
 use PHPUnit\Framework\TestCase;
 use ReachDigital\ISReservations\Model\AppendSourceReservations;
@@ -18,9 +21,6 @@ class GetReservationsByMetadataListTest extends TestCase
 {
     /** @var AppendSourceReservations */
     private $appendReservations;
-
-    /** @var GetSourceReservationsQuantity */
-    private $getReservationQuantity;
 
     /** @var SourceReservationBuilder */
     private $reservationBuilder;
@@ -38,8 +38,6 @@ class GetReservationsByMetadataListTest extends TestCase
     {
         $this->reservationBuilder = Bootstrap::getObjectManager()->get(SourceReservationBuilder::class);
         $this->appendReservations = Bootstrap::getObjectManager()->get(AppendSourceReservations::class);
-        $cleanupReservations = Bootstrap::getObjectManager()->get(CleanupSourceReservations::class);
-        $this->getReservationQuantity = Bootstrap::getObjectManager()->get(GetSourceReservationsQuantity::class);
         $this->encodeMetaData = Bootstrap::getObjectManager()->get(EncodeMetaData::class);
         $this->getReservationsByMetadataList = Bootstrap::getObjectManager()->get(GetReservationsByMetadataList::class);
     }
@@ -75,7 +73,12 @@ class GetReservationsByMetadataListTest extends TestCase
         self::assertCount(4, $reservations);
     }
 
-    private function appendReservation($sourceCode, $sku, $quantity, $metaData): void
+    /**
+     * @throws CouldNotSaveException
+     * @throws InputException
+     * @throws ValidationException
+     */
+    private function appendReservation(string $sourceCode, string $sku, int $quantity, string $metaData): void
     {
         $this->reservationBuilder->setSourceCode($sourceCode);
         $this->reservationBuilder->setQuantity($quantity);

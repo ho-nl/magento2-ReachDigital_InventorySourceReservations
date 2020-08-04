@@ -11,9 +11,6 @@ use Magento\Framework\App\ResourceConnection;
 use ReachDigital\ISReservationsApi\Api\Data\SourceReservationInterface;
 use ReachDigital\ISReservationsApi\Model\GetSourceReservationsQuantityInterface;
 
-/**
- * @inheritdoc
- */
 class GetSourceReservationsQuantity implements GetSourceReservationsQuantityInterface
 {
     /**

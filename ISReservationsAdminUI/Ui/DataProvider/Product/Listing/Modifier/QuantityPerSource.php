@@ -70,6 +70,7 @@ class QuantityPerSource extends
 
     /**
      * @inheritdoc
+     * @throws NoSuchEntityException
      */
     public function modifyData(array $data): array
     {
