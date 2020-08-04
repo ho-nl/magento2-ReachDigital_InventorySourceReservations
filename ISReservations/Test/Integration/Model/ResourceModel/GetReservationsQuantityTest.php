@@ -5,6 +5,9 @@
  */
 namespace ReachDigital\ISReservations\Test\Integration\Model\ResourceModel;
 
+use Magento\Framework\Exception\CouldNotSaveException;
+use Magento\Framework\Exception\InputException;
+use Magento\Framework\Validation\ValidationException;
 use Magento\TestFramework\Helper\Bootstrap;
 use PHPUnit\Framework\TestCase;
 use ReachDigital\ISReservations\Model\AppendSourceReservations;
@@ -76,7 +79,12 @@ class GetReservationsQuantityTest extends TestCase
         return [['eu-1', 'SKU-1', 10], ['eu-2', 'SKU-2', 5], ['eu-2', 'SKU-2', -5]];
     }
 
-    private function appendReservation($sourceCode, $sku, $quantity, $metaData): void
+    /**
+     * @throws CouldNotSaveException
+     * @throws InputException
+     * @throws ValidationException
+     */
+    private function appendReservation(string $sourceCode, string $sku, float $quantity, string $metaData): void
     {
         $this->reservationBuilder->setSourceCode($sourceCode);
         $this->reservationBuilder->setQuantity($quantity);

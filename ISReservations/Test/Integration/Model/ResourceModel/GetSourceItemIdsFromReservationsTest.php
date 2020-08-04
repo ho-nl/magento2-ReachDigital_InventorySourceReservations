@@ -7,9 +7,11 @@
 namespace ReachDigital\ISReservations\Model\ResourceModel;
 
 use Magento\Framework\Api\SearchCriteriaBuilder;
+use Magento\Framework\Exception\CouldNotSaveException;
+use Magento\Framework\Exception\InputException;
+use Magento\Framework\Validation\ValidationException;
 use Magento\Inventory\Model\SourceItem;
 use Magento\InventoryApi\Api\SourceItemRepositoryInterface;
-use Magento\Setup\Exception;
 use Magento\TestFramework\Helper\Bootstrap;
 use PHPUnit\Framework\TestCase;
 use ReachDigital\ISReservations\Model\AppendSourceReservations;
@@ -18,9 +20,6 @@ use ReachDigital\ISReservationsApi\Api\Data\SourceReservationInterface;
 
 class GetSourceItemIdsFromReservationsTest extends TestCase
 {
-    /** @var GetSourceItemIdsFromReservations */
-    private $getReservationQuantity;
-
     /** @var SourceItemRepositoryInterface */
     private $sourceItemRepository;
 
@@ -38,7 +37,6 @@ class GetSourceItemIdsFromReservationsTest extends TestCase
 
     protected function setUp()
     {
-        $this->getReservationQuantity = Bootstrap::getObjectManager()->get(GetSourceItemIdsFromReservations::class);
         $this->sourceItemRepository = Bootstrap::getObjectManager()->get(SourceItemRepositoryInterface::class);
         $this->searchCriteriaBuilder = Bootstrap::getObjectManager()->get(SearchCriteriaBuilder::class);
         $this->appendReservations = Bootstrap::getObjectManager()->get(AppendSourceReservations::class);
@@ -92,13 +90,13 @@ class GetSourceItemIdsFromReservationsTest extends TestCase
 
         // Assert that obtained source item ID matches original source item ID
         self::assertSameSize($itemIds, $testItemIds);
-        self::assertEquals(array_diff($itemIds, $testItemIds), []);
+        self::assertEquals([], array_diff($itemIds, $testItemIds));
     }
 
     /**
-     * @throws \Magento\Framework\Exception\CouldNotSaveException
-     * @throws \Magento\Framework\Exception\InputException
-     * @throws \Magento\Framework\Validation\ValidationException
+     * @throws CouldNotSaveException
+     * @throws InputException
+     * @throws ValidationException
      */
     private function appendReservation(
         string $sourceCode,

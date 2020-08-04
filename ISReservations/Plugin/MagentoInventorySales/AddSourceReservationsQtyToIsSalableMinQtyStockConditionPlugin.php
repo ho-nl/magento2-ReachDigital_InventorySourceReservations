@@ -6,6 +6,7 @@
 
 namespace ReachDigital\ISReservations\Plugin\MagentoInventorySales;
 
+use Closure;
 use Magento\CatalogInventory\Api\StockConfigurationInterface;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\DB\Select;
@@ -34,7 +35,7 @@ class AddSourceReservationsQtyToIsSalableMinQtyStockConditionPlugin
         $this->resourceConnection = $resourceConnection;
     }
 
-    public function aroundExecute(MinQtyStockCondition $subject, \Closure $proceed, Select $select): string
+    public function aroundExecute(MinQtyStockCondition $subject, Closure $proceed, Select $select): string
     {
         $globalMinQty = (float) $this->configuration->getMinQty();
 

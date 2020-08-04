@@ -9,11 +9,6 @@ namespace ReachDigital\ISReservations\Model;
 
 use ReachDigital\ISReservationsApi\Api\Data\SourceReservationInterface;
 
-/**
- * {@inheritdoc}
- *
- * @codeCoverageIgnore
- */
 class SourceReservation implements SourceReservationInterface
 {
     /**

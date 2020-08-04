@@ -6,6 +6,7 @@ declare(strict_types=1);
  */
 namespace ReachDigital\ISReservations\Model\ResourceModel;
 
+use DomainException;
 use Magento\Framework\App\ResourceConnection;
 use ReachDigital\ISReservations\Model\SourceReservation;
 use ReachDigital\ISReservationsApi\Api\Data\SourceReservationInterface;
@@ -35,7 +36,7 @@ class GetReservationsByMetadata
      * @param string $startsWith
      *
      * @return SourceReservation[]
-     * @throws \DomainException
+     * @throws DomainException
      */
     public function execute(string $startsWith): array
     {

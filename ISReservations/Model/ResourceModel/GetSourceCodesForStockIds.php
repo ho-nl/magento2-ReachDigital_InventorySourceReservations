@@ -5,6 +5,7 @@
  */
 namespace ReachDigital\ISReservations\Model\ResourceModel;
 
+use DomainException;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Inventory\Model\ResourceModel\Source as SourceResourceModel;
 use Magento\Inventory\Model\ResourceModel\StockSourceLink as StockSourceLinkResourceModel;
@@ -30,7 +31,7 @@ class GetSourceCodesForStockIds
      * @param int $stockId
      *
      * @return array
-     * @throws \DomainException
+     * @throws DomainException
      */
     public function execute(int $stockId): array
     {

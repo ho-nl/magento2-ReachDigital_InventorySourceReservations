@@ -5,11 +5,16 @@
  */
 
 use Magento\Framework\Api\SearchCriteriaBuilder;
+use Magento\Framework\Exception\CouldNotSaveException;
+use Magento\Framework\Exception\InputException;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Validation\ValidationException;
 use Magento\InventoryApi\Api\Data\SourceItemInterface;
 use Magento\InventoryApi\Api\SourceItemRepositoryInterface;
 use Magento\InventoryApi\Api\SourceItemsSaveInterface;
 use Magento\InventoryConfiguration\Model\GetStockItemConfiguration;
 use Magento\InventoryConfiguration\Model\SaveStockItemConfiguration;
+use Magento\InventoryConfigurationApi\Exception\SkuIsNotAssignedToStockException;
 use Magento\InventoryIndexer\Indexer\SourceItem\IndexDataBySkuListProvider;
 use Magento\TestFramework\Helper\Bootstrap;
 use PHPUnit\Framework\TestCase;
@@ -56,7 +61,7 @@ class AddSourceReservationsQtyToIsSalableConditionsPluginTest extends TestCase
     }
 
     /**
-     * Test that given various stock item configurations, reseveration qty, and actual source stock level,
+     * Test that given various stock item configurations, reservation qty, and actual source stock level,
      * IndexDataBySkuListProvider provides correct index data.
      *
      * @covers             \ReachDigital\ISReservations\Plugin\MagentoInventoryIndexer\AddSourceReservationsQtyToIsSalableConditionsPlugin
@@ -86,11 +91,11 @@ class AddSourceReservationsQtyToIsSalableConditionsPluginTest extends TestCase
      * @param int   $expectedIsSalable
      * @param int   $expectedSalableQty
      *
-     * @throws \Magento\Framework\Exception\CouldNotSaveException
-     * @throws \Magento\Framework\Exception\InputException
-     * @throws \Magento\Framework\Exception\LocalizedException
-     * @throws \Magento\Framework\Validation\ValidationException
-     * @throws \Magento\InventoryConfigurationApi\Exception\SkuIsNotAssignedToStockException
+     * @throws CouldNotSaveException
+     * @throws InputException
+     * @throws LocalizedException
+     * @throws ValidationException
+     * @throws SkuIsNotAssignedToStockException
      */
     public function testAddSourceReservationsQtyToIsSalableConditions(
         float $sourceQty,
@@ -146,9 +151,9 @@ class AddSourceReservationsQtyToIsSalableConditionsPluginTest extends TestCase
      * @param string $sku
      * @param string $sourceCode
      *
-     * @throws \Magento\Framework\Exception\CouldNotSaveException
-     * @throws \Magento\Framework\Exception\InputException
-     * @throws \Magento\Framework\Validation\ValidationException
+     * @throws CouldNotSaveException
+     * @throws InputException
+     * @throws ValidationException
      */
     private function setSourceQtyBySkuAndSourceCode(float $qty, int $status, string $sku, string $sourceCode): void
     {
@@ -172,9 +177,9 @@ class AddSourceReservationsQtyToIsSalableConditionsPluginTest extends TestCase
      * @param $quantity
      * @param $metaData
      *
-     * @throws \Magento\Framework\Exception\CouldNotSaveException
-     * @throws \Magento\Framework\Exception\InputException
-     * @throws \Magento\Framework\Validation\ValidationException
+     * @throws CouldNotSaveException
+     * @throws InputException
+     * @throws ValidationException
      */
     private function appendReservation(string $sourceCode, string $sku, float $quantity, string $metaData): void
     {

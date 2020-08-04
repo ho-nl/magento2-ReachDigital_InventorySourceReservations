@@ -7,6 +7,10 @@ declare(strict_types=1);
 
 namespace ReachDigital\ISReservationsApi\Model;
 
+use Magento\Framework\Exception\CouldNotSaveException;
+use Magento\Framework\Exception\InputException;
+use ReachDigital\ISReservationsApi\Api\Data\SourceReservationInterface;
+
 /**
  * Domain service used to append Source Reservations to keep track of quantity increments or deductions on the source
  * before they are actually delivered..
@@ -25,8 +29,8 @@ interface AppendSourceReservationsInterface
      *
      * @param SourceReservationInterface[] $reservations
      * @return void
-     * @throws \Magento\Framework\Exception\InputException
-     * @throws \Magento\Framework\Exception\CouldNotSaveException
+     * @throws InputException
+     * @throws CouldNotSaveException
      */
     public function execute(array $reservations);
 }

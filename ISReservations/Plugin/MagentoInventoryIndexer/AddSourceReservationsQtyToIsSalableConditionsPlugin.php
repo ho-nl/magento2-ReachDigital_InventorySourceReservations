@@ -18,6 +18,7 @@ use Magento\Inventory\Model\ResourceModel\Source as SourceResourceModel;
 use Magento\Inventory\Model\ResourceModel\StockSourceLink as StockSourceLinkResourceModel;
 use Magento\Inventory\Model\StockSourceLink;
 use Magento\InventoryApi\Api\Data\SourceInterface;
+use Zend_Db_Expr;
 
 class AddSourceReservationsQtyToIsSalableConditionsPlugin
 {
@@ -80,10 +81,10 @@ class AddSourceReservationsQtyToIsSalableConditionsPlugin
                 []
             )
             ->joinLeft(
-                # Aggregrate before join for better performance, see https://stackoverflow.com/questions/27622398/multiple-array-agg-calls-in-a-single-query/27626358#
+                # Aggregate before join for better performance, see https://stackoverflow.com/questions/27622398/multiple-array-agg-calls-in-a-single-query/27626358#
                 # Must pass as Zend_Db_Expr object to prevent incorrect quoting
                 [
-                    'res_sum' => new \Zend_Db_Expr(
+                    'res_sum' => new Zend_Db_Expr(
                         '(SELECT res.*, SUM(res.quantity) as aggregate_quantity FROM ' .
                             $sourceReservationTable .
                             ' AS res WHERE res.source_code ' .
@@ -133,7 +134,6 @@ class AddSourceReservationsQtyToIsSalableConditionsPlugin
             )
             ->where('stock_source_link.' . StockSourceLink::STOCK_ID . ' = ?', $stockId)
             ->where(SourceInterface::ENABLED . ' = ?', 1);
-        $sourceCodes = $connection->fetchCol($select);
-        return $sourceCodes;
+        return $connection->fetchCol($select);
     }
 }

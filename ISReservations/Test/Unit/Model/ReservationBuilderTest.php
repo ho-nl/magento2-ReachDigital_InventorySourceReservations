@@ -8,8 +8,10 @@ declare(strict_types=1);
 namespace ReachDigital\ISReservations\Test\Unit\Model;
 
 use Magento\Framework\ObjectManagerInterface;
+use Magento\Framework\Validation\ValidationException;
 use Magento\Framework\Validation\ValidationResult;
 use Magento\Framework\Validation\ValidationResultFactory;
+use PHPUnit_Framework_MockObject_MockObject;
 use ReachDigital\ISReservations\Model\SourceReservationBuilder;
 use ReachDigital\ISReservations\Model\SnakeToCamelCaseConverter;
 use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
@@ -19,26 +21,26 @@ use PHPUnit\Framework\TestCase;
 class ReservationBuilderTest extends TestCase
 {
     /**
-     * @var ObjectManager|\PHPUnit_Framework_MockObject_MockObject
+     * @var ObjectManager|PHPUnit_Framework_MockObject_MockObject
      */
     private $objectManager;
 
     /**
-     * @var SourceReservationInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var SourceReservationInterface|PHPUnit_Framework_MockObject_MockObject
      */
     private $reservation;
 
     /**
-     * @var ValidationResult|\PHPUnit_Framework_MockObject_MockObject
+     * @var ValidationResult|PHPUnit_Framework_MockObject_MockObject
      */
     private $validationResult;
 
     /**
-     * @var SnakeToCamelCaseConverter|\PHPUnit_Framework_MockObject_MockObject
+     * @var SnakeToCamelCaseConverter|PHPUnit_Framework_MockObject_MockObject
      */
     private $snakeToCamelCaseConverter;
 
-    /** @var  ValidationResultFactory|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var  ValidationResultFactory|PHPUnit_Framework_MockObject_MockObject */
     private $validationResultFactory;
 
     /**
@@ -56,7 +58,7 @@ class ReservationBuilderTest extends TestCase
             ->getMock();
         $this->validationResultFactory = $this->getMockBuilder(ValidationResultFactory::class)
             ->setConstructorArgs([
-                'objectManager' => $this->createMock(\Magento\Framework\ObjectManagerInterface::class),
+                'objectManager' => $this->createMock(ObjectManagerInterface::class),
             ])
             ->getMock();
 
@@ -119,11 +121,11 @@ class ReservationBuilderTest extends TestCase
      * @param array $firstSetter
      * @param array $secondSetter
      * @dataProvider getSettersAndValues
-     * @expectedException \Magento\Framework\Validation\ValidationException
-     * @expectedExceptionMessage  Validation error
      */
     public function testThrowValidationException(array $firstSetter, array $secondSetter)
     {
+        $this->expectExceptionMessage('Validation error');
+        $this->expectException(ValidationException::class);
         $this->validationResultFactory
             ->expects($this->once())
             ->method('create')

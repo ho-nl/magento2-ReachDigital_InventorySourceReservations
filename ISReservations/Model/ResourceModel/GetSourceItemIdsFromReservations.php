@@ -5,9 +5,9 @@
  */
 namespace ReachDigital\ISReservations\Model\ResourceModel;
 
+use DomainException;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Inventory\Model\ResourceModel\SourceItem;
-use Magento\InventoryApi\Api\Data\SourceItemInterface;
 use ReachDigital\ISReservations\Model\SourceReservation;
 use ReachDigital\ISReservationsApi\Api\Data\SourceReservationInterface;
 
@@ -30,7 +30,7 @@ class GetSourceItemIdsFromReservations
      * @param array $reservations
      *
      * @return array
-     * @throws \DomainException
+     * @throws DomainException
      */
     public function execute(array $reservations): array
     {
