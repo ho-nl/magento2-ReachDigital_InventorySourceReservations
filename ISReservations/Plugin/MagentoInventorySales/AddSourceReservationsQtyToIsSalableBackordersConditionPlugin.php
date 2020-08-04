@@ -18,9 +18,6 @@ class AddSourceReservationsQtyToIsSalableBackordersConditionPlugin
      */
     private $configuration;
 
-    /**
-     * @param StockConfigurationInterface $configuration
-     */
     public function __construct(StockConfigurationInterface $configuration)
     {
         $this->configuration = $configuration;

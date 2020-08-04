@@ -51,11 +51,6 @@ class SourceReservationBuilder implements SourceReservationBuilderInterface
      */
     private $validationResultFactory;
 
-    /**
-     * @param ObjectManagerInterface $objectManager
-     * @param SnakeToCamelCaseConverter $snakeToCamelCaseConverter
-     * @param ValidationResultFactory $validationResultFactory
-     */
     public function __construct(
         ObjectManagerInterface $objectManager,
         SnakeToCamelCaseConverter $snakeToCamelCaseConverter,

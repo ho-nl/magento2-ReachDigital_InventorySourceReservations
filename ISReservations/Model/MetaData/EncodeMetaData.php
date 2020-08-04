@@ -8,9 +8,10 @@ declare(strict_types=1);
 namespace ReachDigital\ISReservations\Model\MetaData;
 
 use InvalidArgumentException;
+use ReachDigital\ISReservationsApi\Api\EncodeMetaDataInterface;
 use function in_array;
 
-class EncodeMetaData
+class EncodeMetaData implements EncodeMetaDataInterface
 {
     /**
      * @param array $data

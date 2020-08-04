@@ -22,19 +22,12 @@ class CleanupSourceReservations implements CleanupSourceReservationsInterface
      */
     private $groupConcatMaxLen;
 
-    /**
-     * @param ResourceConnection $resource
-     * @param int $groupConcatMaxLen
-     */
     public function __construct(ResourceConnection $resource, int $groupConcatMaxLen)
     {
         $this->resource = $resource;
         $this->groupConcatMaxLen = $groupConcatMaxLen;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function execute()
     {
         return;

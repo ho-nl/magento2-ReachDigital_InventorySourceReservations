@@ -12,7 +12,7 @@ use Magento\InventoryApi\Api\GetSourceItemsBySkuInterface;
 use Magento\InventoryApi\Api\SourceRepositoryInterface;
 use Magento\InventoryCatalogApi\Model\IsSingleSourceModeInterface;
 use Magento\InventoryConfigurationApi\Model\IsSourceItemManagementAllowedForProductTypeInterface;
-use ReachDigital\ISReservations\Model\ResourceModel\GetSourceReservationsQuantity;
+use ReachDigital\ISReservationsApi\Model\GetSourceReservationsQuantityInterface;
 
 /**
  * Quantity Per Source modifier on CatalogInventory Product Grid
@@ -41,7 +41,7 @@ class QuantityPerSource extends
     private $getSourceItemsBySku;
 
     /**
-     * @var GetSourceReservationsQuantity
+     * @var GetSourceReservationsQuantityInterface
      */
     private $getSourceReservationsQuantity;
 
@@ -50,7 +50,7 @@ class QuantityPerSource extends
         $isSourceItemManagementAllowedForProductType,
         SourceRepositoryInterface $sourceRepository,
         $getSourceItemsBySku,
-        GetSourceReservationsQuantity $getSourceReservationsQuantity
+        GetSourceReservationsQuantityInterface $getSourceReservationsQuantity
     ) {
         parent::__construct(
             $isSingleSourceMode,

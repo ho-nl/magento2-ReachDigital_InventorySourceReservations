@@ -11,8 +11,9 @@ use Magento\Framework\App\ResourceConnection;
 use ReachDigital\ISReservations\Model\SourceReservation;
 use ReachDigital\ISReservationsApi\Api\Data\SourceReservationInterface;
 use ReachDigital\ISReservationsApi\Api\Data\SourceReservationInterfaceFactory;
+use ReachDigital\ISReservationsApi\Api\GetReservationsByMetadataInterface;
 
-class GetReservationsByMetadata
+class GetReservationsByMetadata implements GetReservationsByMetadataInterface
 {
     /**
      * @var ResourceConnection

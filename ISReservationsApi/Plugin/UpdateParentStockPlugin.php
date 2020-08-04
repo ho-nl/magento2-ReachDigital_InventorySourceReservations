@@ -19,9 +19,6 @@ class UpdateParentStockPlugin
      */
     private $resourceConnection;
 
-    /**
-     * @param ResourceConnection $resourceConnection
-     */
     public function __construct(ResourceConnection $resourceConnection)
     {
         $this->resourceConnection = $resourceConnection;

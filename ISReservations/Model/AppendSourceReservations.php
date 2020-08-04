@@ -39,12 +39,6 @@ class AppendSourceReservations implements AppendSourceReservationsInterface
      */
     private $getSourceItemIdsFromReservations;
 
-    /**
-     * @param SaveMultiple $saveMultiple
-     * @param LoggerInterface $logger
-     * @param SourceItemIndexer $sourceItemIndexer
-     * @param GetSourceItemIdsFromReservations $getSourceItemIdsFromReservations
-     */
     public function __construct(
         SaveMultiple $saveMultiple,
         LoggerInterface $logger,

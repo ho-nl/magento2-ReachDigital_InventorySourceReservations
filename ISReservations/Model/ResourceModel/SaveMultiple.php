@@ -21,9 +21,6 @@ class SaveMultiple
      */
     private $resourceConnection;
 
-    /**
-     * @param ResourceConnection $resourceConnection
-     */
     public function __construct(ResourceConnection $resourceConnection)
     {
         $this->resourceConnection = $resourceConnection;
@@ -31,8 +28,6 @@ class SaveMultiple
 
     /**
      * @param SourceReservationInterface[] $reservations
-     *
-     * @return void
      */
     public function execute(array $reservations)
     {

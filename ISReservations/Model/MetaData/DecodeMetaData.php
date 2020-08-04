@@ -7,7 +7,9 @@
 declare(strict_types=1);
 namespace ReachDigital\ISReservations\Model\MetaData;
 
-class DecodeMetaData
+use ReachDigital\ISReservationsApi\Api\DecodeMetaDataInterface;
+
+class DecodeMetaData implements DecodeMetaDataInterface
 {
     public function execute(string $metaData): array
     {

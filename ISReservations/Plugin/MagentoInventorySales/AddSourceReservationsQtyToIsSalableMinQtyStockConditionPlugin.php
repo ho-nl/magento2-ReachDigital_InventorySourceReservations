@@ -25,10 +25,6 @@ class AddSourceReservationsQtyToIsSalableMinQtyStockConditionPlugin
      */
     private $resourceConnection;
 
-    /**
-     * @param StockConfigurationInterface $configuration
-     * @param ResourceConnection $resourceConnection
-     */
     public function __construct(StockConfigurationInterface $configuration, ResourceConnection $resourceConnection)
     {
         $this->configuration = $configuration;

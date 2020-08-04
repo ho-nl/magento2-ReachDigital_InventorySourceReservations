@@ -18,17 +18,11 @@ class GetSourceReservationsQuantity implements GetSourceReservationsQuantityInte
      */
     private $resource;
 
-    /**
-     * @param ResourceConnection $resource
-     */
     public function __construct(ResourceConnection $resource)
     {
         $this->resource = $resource;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function execute(string $sku, string $sourceCode): float
     {
         $connection = $this->resource->getConnection();
