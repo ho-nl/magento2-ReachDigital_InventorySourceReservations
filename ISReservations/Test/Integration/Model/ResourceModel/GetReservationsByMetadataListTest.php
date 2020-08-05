@@ -14,8 +14,6 @@ use ReachDigital\ISReservations\Model\AppendSourceReservations;
 use ReachDigital\ISReservations\Model\MetaData\EncodeMetaData;
 use ReachDigital\ISReservations\Model\ResourceModel\GetReservationsByMetadataList;
 use ReachDigital\ISReservations\Model\SourceReservationBuilder;
-use ReachDigital\ISReservations\Model\ResourceModel\CleanupSourceReservations;
-use ReachDigital\ISReservations\Model\ResourceModel\GetSourceReservationsQuantity;
 
 class GetReservationsByMetadataListTest extends TestCase
 {
@@ -48,6 +46,8 @@ class GetReservationsByMetadataListTest extends TestCase
      *
      * @magentoDbIsolation disabled
      * @magentoDataFixture ../../../../vendor/reach-digital/magento2-inventory-source-reservations/ISReservations/Test/Integration/_files/clean_all_reservations.php
+     *
+     * @throws
      */
     public function should_add_the_reservation_to_the_stock_amount()
     {

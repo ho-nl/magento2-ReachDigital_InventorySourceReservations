@@ -69,12 +69,15 @@ class ReservationBuilderTest extends TestCase
         ]);
     }
 
+    /**
+     * @throws ValidationException
+     */
     public function testBuild()
     {
         $reservationData = [
             SourceReservationInterface::RESERVATION_ID => null,
             SourceReservationInterface::SOURCE_CODE => '1',
-            SourceReservationInterface::SKU => 'somesku',
+            SourceReservationInterface::SKU => 'some_sku',
             SourceReservationInterface::QUANTITY => 11,
             SourceReservationInterface::METADATA => 'some meta data',
         ];
@@ -82,7 +85,7 @@ class ReservationBuilderTest extends TestCase
         $reservationMappedData = [
             'reservationId' => null,
             'sourceCode' => 1,
-            'sku' => 'somesku',
+            'sku' => 'some_sku',
             'quantity' => 11,
             'metadata' => 'some meta data',
         ];
@@ -154,7 +157,7 @@ class ReservationBuilderTest extends TestCase
     {
         return [
             'with_missing_source_code' => [
-                ['method' => 'setSku', 'argument' => 'somesku'],
+                ['method' => 'setSku', 'argument' => 'some_sku'],
                 ['method' => 'setQuantity', 'argument' => 11],
             ],
             'with_missing_sku' => [
@@ -163,7 +166,7 @@ class ReservationBuilderTest extends TestCase
             ],
             'with_missing_qty' => [
                 ['method' => 'setSourceCode', 'argument' => '1'],
-                ['method' => 'setSku', 'argument' => 'somesku'],
+                ['method' => 'setSku', 'argument' => 'some_sku'],
             ],
         ];
     }

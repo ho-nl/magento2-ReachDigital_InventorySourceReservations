@@ -62,6 +62,7 @@ class GetReservationsQuantityTest extends TestCase
      * @dataProvider       reindexRowDataProvider
      *
      * @magentoDbIsolation disabled
+     * @throws
      */
     public function should_add_the_reservation_to_the_stock_amount(string $sourceCode, string $sku, float $quantity)
     {
