@@ -10,6 +10,9 @@ use Magento\Framework\App\ResourceConnection;
 use ReachDigital\ISReservationsApi\Api\Data\SourceReservationInterface;
 use Traversable;
 
+/**
+ * @todo Move to Test folder as it isn't used anywhere else.
+ */
 class GetReservationsQuantityList
 {
     /**
