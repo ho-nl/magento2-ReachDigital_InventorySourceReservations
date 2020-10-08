@@ -89,6 +89,11 @@
         "branches": [
             {
                 "name": "master"
+            },
+            {
+                "name": "canary",
+                "channel": "canary",
+                "prerelease": "canary"
             }
         ]
     }
